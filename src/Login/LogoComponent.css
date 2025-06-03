@@ -305,3 +305,10 @@ input {
 .custom-google-btn:hover {
   background-color: #f7f7f7;
 }
+
+
+/* Hide One Tap if it sneaks in */
+div[aria-modal="true"],
+iframe[src*="https://accounts.google.com/gsi/"] {
+  display: none !important;
+}
