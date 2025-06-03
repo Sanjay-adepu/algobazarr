@@ -95,19 +95,21 @@ const LogoComponent = () => {
     };
 
     script.onload = () => {
-      window.google.accounts.id.initialize({
-        client_id: '741240365062-r2te32gvukmekm4r55l4ishc0mhsk4f9.apps.googleusercontent.com',
-        callback: window.handleCredentialResponse,
-        ux_mode: 'popup',
-        auto_select: false, // <-- this disables auto One Tap login
-      });
+  window.google.accounts.id.initialize({
+    client_id: '741240365062-r2te32gvukmekm4r55l4ishc0mhsk4f9.apps.googleusercontent.com',
+    callback: window.handleCredentialResponse,
+    auto_select: false,
+    ux_mode: 'popup',
+  });
 
-      renderGoogleButton(view); // Initial render
+  renderGoogleButton(view);
 
-      // Do NOT call prompt() – this triggers One Tap!
-      // window.google.accounts.id.prompt(); <-- removed
-    };
-  }, []);
+  // 💥 This line disables One Tap if it's trying to appear
+  window.google.accounts.id.cancel(); // <- Important
+
+  // ⚠️ Do NOT call prompt()
+};
+
 
   // Re-render button on view change (signin/signup)
   useEffect(() => {
