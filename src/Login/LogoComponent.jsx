@@ -26,15 +26,16 @@ const LogoComponent = () => {
     const container = document.getElementById('googleSignInDiv');
     if (!container) return;
 
-    container.innerHTML = ''; // Clear previous button
+    container.innerHTML = ''; // Clear any previous button
 
     window.google.accounts.id.renderButton(container, {
       theme: 'outline',
       size: 'large',
       type: 'standard',
-      text: 'continue_with', // default, text will be overridden below
+      text: 'continue_with',
     });
 
+    // Override default button text
     setTimeout(() => {
       const textSpan = container.querySelector('span');
       if (textSpan) {
@@ -96,14 +97,15 @@ const LogoComponent = () => {
       window.google.accounts.id.initialize({
         client_id: '741240365062-r2te32gvukmekm4r55l4ishc0mhsk4f9.apps.googleusercontent.com',
         callback: window.handleCredentialResponse,
+        auto_select: false,           // 🚫 disables auto-login
+        ux_mode: 'popup',             // 🚫 disables One Tap
+        cancel_on_tap_outside: false, // Optional: prevent auto-close
       });
 
-      renderGoogleButton(view); // Initial render
-      
+      renderGoogleButton(view);
     };
   }, []);
 
-  // Re-render button on view change (signin/signup)
   useEffect(() => {
     if (window.google?.accounts?.id) {
       renderGoogleButton(view);
