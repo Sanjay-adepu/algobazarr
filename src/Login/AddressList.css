@@ -1,0 +1,97 @@
+.address-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 24px;
+  font-family: 'Inter', sans-serif;
+  color: #222;
+}
+
+.address-container h2 {
+  font-size: 24px;
+  margin-bottom: 16px;
+  color: #111;
+}
+
+.address-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 16px;
+  background-color: #f9f9f9;
+}
+
+.address-card p {
+  margin: 4px 0;
+}
+
+.button-group {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+}
+
+.button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.button-primary {
+  background-color: #4A4AFF;
+  color: white;
+}
+
+.button-primary:hover {
+  background-color: #3636f1;
+}
+
+.button-secondary {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.button-secondary:hover {
+  background-color: #c6c6c6;
+}
+
+.address-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.address-form input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.success-message {
+  color: green;
+  margin-top: 10px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+  .address-container {
+    padding: 16px;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  .button {
+    width: 100%;
+  }
+}
+
+

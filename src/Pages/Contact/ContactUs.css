@@ -1,0 +1,95 @@
+/* Base styles */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+
+
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: #f4f6f8;
+  color: #222;
+}
+
+/* Contact Container */
+.contact-container {
+  max-width: 700px;
+  margin: 80px auto 40px;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  text-align: left;
+  animation: fadeIn 0.5s ease-in-out;
+  margin-top:15% !important;
+}
+
+/* Heading */
+.contact-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color:#359a69;
+  text-align: center;
+}
+
+/* Each Contact Item */
+.contact-item {
+  margin-bottom: 1.2rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-item strong {
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+/* Links */
+.contact-item a {
+  color: #007b8f;
+  text-decoration: none;
+  word-break: break-word;
+  transition: color 0.3s ease;
+}
+
+.contact-item a:hover {
+  color: #005e6b;
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contact-container {
+    margin: 60px 1rem 40px;
+    padding: 1.5rem;
+    box-shadow: none;
+    margin-top:80px !important;
+    
+  }
+
+  .contact-heading {
+    font-size: 1.75rem;
+  }
+
+  .contact-item {
+    font-size: 0.95rem;
+  }
+}
+
+/* Simple fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

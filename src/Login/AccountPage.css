@@ -1,0 +1,105 @@
+/* AccountPage.css */
+
+.account-wrapper {
+  max-width: 700px;
+  margin: 50px auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.3s ease-in-out;
+}
+
+.account-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.account-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.account-user-email {
+  font-size: 1rem;
+  color: #666;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
+.account-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+.account-card {
+  background-color: #f9f9f9;
+  border-radius: 16px;
+  padding: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.account-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #333;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.card-content svg {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.signout-card {
+  background-color: #ffeaea;
+  color: #c0392b;
+}
+
+.signout-card .card-content svg {
+  color: #e74c3c;
+}
+
+@media (max-width: 600px) {
+  .account-wrapper {
+    padding: 0.2rem;
+    margin: 30px 1rem;
+    width:90%;
+    height:auto;
+  }
+
+  .account-title {
+    font-size: 1.4rem;
+  }
+
+  .account-user-email {
+    font-size: 0.9rem;
+  }
+
+  .card-content {
+    font-size: 1rem;
+  }
+
+  .card-content svg {
+    font-size: 1.8rem;
+  }
+}
