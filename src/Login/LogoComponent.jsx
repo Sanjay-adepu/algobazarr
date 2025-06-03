@@ -32,7 +32,9 @@ const LogoComponent = () => {
       theme: 'outline',
       size: 'large',
       type: 'standard',
-      text: 'continue_with', // default, text will be overridden below
+      text: 'continue_with',
+      // Even if undocumented, sometimes this helps suppress One Tap
+      data_auto_prompt: 'false',
     });
 
     setTimeout(() => {
@@ -96,10 +98,14 @@ const LogoComponent = () => {
       window.google.accounts.id.initialize({
         client_id: '741240365062-r2te32gvukmekm4r55l4ishc0mhsk4f9.apps.googleusercontent.com',
         callback: window.handleCredentialResponse,
+        ux_mode: 'popup',
+        auto_select: false, // <-- this disables auto One Tap login
       });
 
       renderGoogleButton(view); // Initial render
-      window.google.accounts.id.prompt();
+
+      // Do NOT call prompt() – this triggers One Tap!
+      // window.google.accounts.id.prompt(); <-- removed
     };
   }, []);
 
