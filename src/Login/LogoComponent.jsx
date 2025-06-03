@@ -24,7 +24,7 @@ const LogoComponent = () => {
 
   const renderGoogleButton = (viewType) => {
     const container = document.getElementById('googleSignInDiv');
-    if (!container) return;
+    if (!container || !window.google?.accounts?.id) return;
 
     container.innerHTML = ''; // Clear previous button
 
@@ -33,10 +33,9 @@ const LogoComponent = () => {
       size: 'large',
       type: 'standard',
       text: 'continue_with',
-      // Even if undocumented, sometimes this helps suppress One Tap
-      data_auto_prompt: 'false',
     });
 
+    // Change button text manually
     setTimeout(() => {
       const textSpan = container.querySelector('span');
       if (textSpan) {
@@ -61,62 +60,66 @@ const LogoComponent = () => {
     script.defer = true;
     document.body.appendChild(script);
 
-    window.handleCredentialResponse = async (response) => {
-      try {
-        setLoading(true);
+    script.onload = () => {
+      if (!window.google || !window.google.accounts) return;
 
-        const res = await fetch('https://algotronn-backend.vercel.app/api/google-login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token: response.credential }),
-        });
+      window.google.accounts.id.initialize({
+        client_id: '741240365062-r2te32gvukmekm4r55l4ishc0mhsk4f9.apps.googleusercontent.com',
+        callback: handleCredentialResponse,
+        auto_select: false,
+        ux_mode: 'popup',
+      });
 
-        const data = await res.json();
-        if (data.success) {
-          localStorage.setItem('googleId', data.user.googleId);
-          localStorage.setItem('email', data.user.email);
+      renderGoogleButton(view);
 
-          setAccountDetails(data.user);
-          setFormData(prev => ({ ...prev, email: data.user.email }));
-
-          setTimeout(() => {
-            setView(data.isNewUser ? 'address' : 'account');
-            setLoading(false);
-          }, 1000);
-        } else {
-          alert('Login failed');
-          setLoading(false);
-        }
-      } catch (err) {
-        console.error(err);
-        alert('An error occurred during login.');
-        setLoading(false);
-      }
+      // 💥 Cancel any One Tap UI
+      window.google.accounts.id.cancel();
     };
 
-    script.onload = () => {
-  window.google.accounts.id.initialize({
-    client_id: '741240365062-r2te32gvukmekm4r55l4ishc0mhsk4f9.apps.googleusercontent.com',
-    callback: window.handleCredentialResponse,
-    auto_select: false,
-    ux_mode: 'popup',
-  });
+    return () => {
+      window.google?.accounts?.id?.cancel();
+    };
+  }, []);
 
-  renderGoogleButton(view);
-
-  // 💥 This line disables One Tap if it's trying to appear
-  window.google.accounts.id.cancel(); // <- Important
-
-  // ⚠️ Do NOT call prompt()
-};
-
-
-  // Re-render button on view change (signin/signup)
   useEffect(() => {
     if (window.google?.accounts?.id) {
       renderGoogleButton(view);
     }
   }, [view]);
+
+  const handleCredentialResponse = async (response) => {
+    try {
+      setLoading(true);
+
+      const res = await fetch('https://algotronn-backend.vercel.app/api/google-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: response.credential }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        localStorage.setItem('googleId', data.user.googleId);
+        localStorage.setItem('email', data.user.email);
+
+        setAccountDetails(data.user);
+        setFormData(prev => ({ ...prev, email: data.user.email }));
+
+        setTimeout(() => {
+          setView(data.isNewUser ? 'address' : 'account');
+          setLoading(false);
+        }, 1000);
+      } else {
+        alert('Login failed');
+        setLoading(false);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('An error occurred during login.');
+      setLoading(false);
+    }
+  };
 
   const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -131,7 +134,6 @@ const LogoComponent = () => {
   const handleSignOut = () => {
     localStorage.removeItem('googleId');
     localStorage.removeItem('email');
-
     setAccountDetails(null);
     setFormData({
       name: '',
