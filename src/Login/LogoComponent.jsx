@@ -99,7 +99,7 @@ const LogoComponent = () => {
       });
 
       renderGoogleButton(view); // Initial render
-      window.google.accounts.id.prompt();
+      
     };
   }, []);
 
