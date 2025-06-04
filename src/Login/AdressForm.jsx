@@ -4,6 +4,9 @@ import './AddressForm.css';
 
 const AddressForm = () => {
   const navigate = useNavigate();
+const [isAddressCompleted, setIsAddressCompleted] = useState(false);
+
+
   const [formData, setFormData] = useState({
     name: '',
     mobile: '',
