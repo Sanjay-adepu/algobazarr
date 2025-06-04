@@ -20,7 +20,7 @@ const ProductCards = () => {
           <div className="product-title">
             Collaborate Your Strategy with AlgoBazarr
           </div>
-          <div className="product-price">₹ Free</div>
+          <div className="product-price"></div>
           <div className="product-button">Click here</div>
         </a>
 
@@ -34,7 +34,7 @@ const ProductCards = () => {
           <div className="product-title">
             AlgoBazarr Strategy Creation Service
           </div>
-          <div className="product-price">₹ 1</div>
+          <div className="product-price"></div>
           <div className="product-button">Click here</div>
         </a>
       </div>
