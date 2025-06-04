@@ -68,7 +68,7 @@ const isAddressCompleted = localStorage.getItem("addressCompleted") === "true";
   const handleAddToCart = async (redirectToCart = false) => {
     const googleId = localStorage.getItem('googleId');
 
-const isAddressCompleted = localStorage.getItem("AddressCompleted") === "true";
+const isAddressCompleted = localStorage.getItem("addressCompleted") === "true";
 
     if (!googleId) {
       alert("Please login to add items to cart");
