@@ -256,20 +256,19 @@ if (!isAddressCompleted) {
                       <li>You’ll be redirected to Tradetron — just click <strong>“Subscribe”</strong> to confirm.</li>
                     </ol>
 
-                  {!isAddressCompleted ? (
-  <p style={{ color: 'red', margin: '1rem 0' }}>
-    Please complete your address to subscribe.
-  </p>
-) : (
-  <a
-    href={selectedProduct.tradetronLink || "https://www.tradetron.tech"}
-    className="pc-buy"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    Click Here to Subscribe
-  </a>
-)}
+                  <button
+  className="pc-buy"
+  onClick={() => {
+    if (!isAddressCompleted) {
+      alert("Please complete your address before subscribing.");
+      navigate('/address'); // Redirect to address page
+    } else {
+      window.open(selectedProduct.tradetronLink || "https://www.tradetron.tech", "_blank");
+    }
+  }}
+>
+  Click Here to Subscribe
+</button>
 
                   </div>
                 </>
