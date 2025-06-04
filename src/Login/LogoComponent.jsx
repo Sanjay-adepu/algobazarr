@@ -9,6 +9,7 @@ const LogoComponent = () => {
   const [accountDetails, setAccountDetails] = useState(null);
   const [view, setView] = useState('signin');
   const [loading, setLoading] = useState(false);
+const [isAddressCompleted, setIsAddressCompleted] = useState(false);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -130,6 +131,8 @@ const LogoComponent = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     alert('Address submitted successfully!');
+localStorage.setItem('addressCompleted', 'true');
+  setIsAddressCompleted(true);
     setView('account');
   };
 
