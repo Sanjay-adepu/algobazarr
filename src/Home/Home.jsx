@@ -11,6 +11,7 @@ const ProductCards = () => {
       <h2 className="customization-title">Customization</h2>
 
       <div className="products-grid">
+<a className="" href="https://forms.gle/izKtv55kMwYS7mei6">
         <div className="product-card">
           <div className="product-image-wrapper">
             <img
@@ -25,6 +26,9 @@ const ProductCards = () => {
           <a className="product-button" href="https://forms.gle/izKtv55kMwYS7mei6">Click here</a>
         </div>
 
+      </a>
+
+       <a className="product-button" href="https://forms.gle/ttLjs1D612XzLa6LA">
         <div className="product-card">
           <div className="product-image-wrapper">
             <img
@@ -40,6 +44,7 @@ const ProductCards = () => {
             Click here
           </a>
         </div>
+</a>
       </div>
       <Footer/>
     </>
