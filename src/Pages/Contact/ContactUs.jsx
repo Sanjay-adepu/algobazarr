@@ -21,10 +21,10 @@ const ContactUs = () => {
         <a href="mailto:algobazarr@gmail.com">algobazarr@gmail.com</a>
       </div>
 
-      <div className="contact-item">
-        <strong>Phone:</strong> +91 81422 16171
-      </div>
-
+     <div className="contact-item">
+  <strong>Phone:</strong>{" "}
+  <a href="tel:+918142216171">+91 81422 16171</a>
+</div>
       <div className="contact-item">
         <strong>WhatsApp:</strong>{" "}
         <a
