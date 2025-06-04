@@ -37,6 +37,9 @@ const [isAddressCompleted, setIsAddressCompleted] = useState(false);
       return;
     }
 
+localStorage.setItem('addressCompleted', 'true');
+  setIsAddressCompleted(true);
+
     setLoading(true);
 
     try {
