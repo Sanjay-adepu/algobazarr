@@ -29,45 +29,49 @@ const [isAddressCompleted, setIsAddressCompleted] = useState(false);
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const googleId = localStorage.getItem('googleId');
+  e.preventDefault();
+  const googleId = localStorage.getItem('googleId');
 
-    if (!googleId) {
-      alert('Google ID not found. Please sign in again.');
-      return;
+  if (!googleId) {
+    alert('Google ID not found. Please sign in again.');
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+    const response = await fetch('https://algotronn-backend.vercel.app/update-address', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...formData,
+        googleId,
+      }),
+    });
+
+    const data = await response.json();
+    setLoading(false);
+
+    if (response.ok) {
+      // ✅ Only set this if the server confirms address is saved
+      localStorage.setItem('addressCompleted', 'true');
+      setIsAddressCompleted(true);
+
+      navigate('/');
+    } else {
+      alert('Error adding address: ' + data.message);
     }
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    setLoading(false);
+    alert('There was an error submitting your form');
+  }
+};
 
-localStorage.setItem('addressCompleted', 'true');
-  setIsAddressCompleted(true);
 
-    setLoading(true);
 
-    try {
-      const response = await fetch('https://algotronn-backend.vercel.app/update-address', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          googleId,
-        }),
-      });
-
-      const data = await response.json();
-      setLoading(false);
-
-      if (response.ok) {
-        navigate('/'); // Redirect to home/account
-      } else {
-        alert('Error adding address: ' + data.message);
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      setLoading(false);
-      alert('There was an error submitting your form');
-    }
-  };
 
   return (
     <form className="address-form" onSubmit={handleSubmit}>
