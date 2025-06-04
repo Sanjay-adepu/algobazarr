@@ -49,7 +49,7 @@ const Navbar = () => {
       <nav className="navbar">
         <div className="navbar-logo">
           <img
-            src="./file_00000000a4bc62309fd4ab8b35a5021c.jpg"
+            src="https://res.cloudinary.com/dppiuypop/image/upload/v1749013255/uploads/nk1oegfjvhxsnwosmklh.jpg"
             alt="AlgoBazaar Logo"
             style={{ height: '37px' }}
             id="d"
