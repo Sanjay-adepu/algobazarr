@@ -69,7 +69,7 @@ const isAddressCompleted = localStorage.getItem("AddressCompleted") === "true";
   const handleAddToCart = async (redirectToCart = false) => {
     const googleId = localStorage.getItem('googleId');
 
-const isAddressCompleted = localStorage.getItem("isAddressCompleted") === "true";
+const isAddressCompleted = localStorage.getItem("AddressCompleted") === "true";
 
     if (!googleId) {
       alert("Please login to add items to cart");
@@ -78,7 +78,7 @@ const isAddressCompleted = localStorage.getItem("isAddressCompleted") === "true"
 
 if (!isAddressCompleted) {
     alert("Please complete your address before purchasing.");
-    navigate("/account"); // or your address form page
+    navigate("/address"); // or your address form page
     return;
   }
 
@@ -129,7 +129,7 @@ if (!isAddressCompleted) {
         return products.filter((p) => p.isPriced === true);
       case "Most Popular":
       case "Newest":
-        return [...products].sort(() => Math.random() - 0.5); // Shuffle for demo
+        return [...products].sort(() => Math.random() - 0.5); // Shuffle for demo 
       default:
         return products;
     }
