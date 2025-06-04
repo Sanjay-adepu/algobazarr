@@ -51,7 +51,9 @@ const LogoComponent = () => {
     if (storedGoogleId && storedEmail) {
       setFormData(prev => ({ ...prev, email: storedEmail }));
       setView('account');
-      return;
+    } else {
+      // ✅ Fix: explicitly set view to 'signin' if not logged in
+      setView('signin');
     }
 
     const script = document.createElement('script');
