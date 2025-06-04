@@ -74,7 +74,7 @@ const isAddressCompleted = localStorage.getItem("addressCompleted") === "true";
       return;
     }
 
-if (!isAddressCompleted) {
+if (localStorage.getItem("addressCompleted") !== "true") {
     alert("Please complete your address before purchasing.");
     navigate("/address"); // or your address form page
     return;
@@ -254,12 +254,13 @@ if (!isAddressCompleted) {
                       <li>You’ll be redirected to Tradetron — just click <strong>“Subscribe”</strong> to confirm.</li>
                     </ol>
 
-                  <button
+               <button
   className="pc-buy"
   onClick={() => {
-    if (!isAddressCompleted) {
+    const currentAddressStatus = localStorage.getItem("addressCompleted") === "true";
+    if (!currentAddressStatus) {
       alert("Please complete your address before subscribing.");
-      navigate('/address'); // Redirect to address page
+      navigate('/address');
     } else {
       window.open(selectedProduct.tradetronLink || "https://www.tradetron.tech", "_blank");
     }
@@ -268,7 +269,7 @@ if (!isAddressCompleted) {
   Click Here to Subscribe
 </button>
 
-                  </div>
+
                 </>
               )}
 
