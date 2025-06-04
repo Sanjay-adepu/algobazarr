@@ -137,20 +137,25 @@ useEffect(() => {
   };
 
   const getSortedProducts = () => {
-    switch (activeSort) {
-      case "Buying Strategies":
-        return products.filter((p) => p.sorttype === "buying");
-      case "Selling Strategies":
-        return products.filter((p) => p.sorttype === "selling");
-      case "Duplicate Strategies":
-        return products.filter((p) => p.isPriced === true);
-      case "Most Popular":
-      case "Newest":
-        return [...products].sort(() => Math.random() - 0.5); // Shuffle for demo
-      default:
-        return products;
-    }
-  };
+  switch (activeSort) {
+    case "Buying Strategies":
+      return products.filter((p) => p.sorttype === "buying" && !p.isPriced);
+    case "Selling Strategies":
+      return products.filter((p) => p.sorttype === "selling" && !p.isPriced);
+    case "Duplicate Strategies":
+      return products.filter((p) => p.isPriced === true);
+    case "Newest":
+      return products
+        .filter((p) => !p.isPriced)
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // optional if you have createdAt
+    case "Most Popular":
+      return [...products].filter((p) => !p.isPriced).sort(() => Math.random() - 0.5); // or popularity logic
+    case "All Strategies":
+    default:
+      return products; // includes both priced and unpriced
+  }
+};
+
 
   const filteredProducts = getSortedProducts();
 
