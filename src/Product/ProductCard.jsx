@@ -21,13 +21,13 @@ const ProductCard = () => {
   const [loading, setLoading] = useState(true);
 
   const sortOptions = [
-    "Newest",
-    "Most Popular",
-    "Buying Strategies",
-    "Selling Strategies",
-    "Duplicate Strategies"
-  ];
-
+  "All Strategies",
+  "Newest",
+  "Most Popular",
+  "Buying Strategies",
+  "Selling Strategies",
+  "Duplicate Strategies"
+];
 
 useEffect(() => {
   const checkAddress = async () => {
