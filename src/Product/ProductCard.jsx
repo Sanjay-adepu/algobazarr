@@ -28,6 +28,37 @@ const ProductCard = () => {
     "Duplicate Strategies"
   ];
 
+
+useEffect(() => {
+  const checkAddress = async () => {
+    const googleId = localStorage.getItem('googleId');
+    if (!googleId) return; // If not logged in, skip check
+
+    try {
+      const response = await fetch('https://algotronn-backend.vercel.app/get-address', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ googleId }),
+      });
+      const data = await response.json();
+
+      if (!data.success || !data.address || Object.keys(data.address).length === 0) {
+        alert("Please add your address before proceeding.");
+        navigate('/address');
+      }
+    } catch (error) {
+      console.error("Error checking address:", error);
+      alert("Failed to verify address. Please try again.");
+    }
+  };
+
+  checkAddress();
+}, [navigate]);
+
+
+
+
+
   // Fetch all products
   useEffect(() => {
     async function fetchProducts() {
