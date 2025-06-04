@@ -21,8 +21,7 @@ const ProductCard = () => {
   const [loading, setLoading] = useState(true);
 
 
-const isAddressCompleted = localStorage.getItem("AddressCompleted") === "true";
-
+const isAddressCompleted = localStorage.getItem("addressCompleted") === "true";
 
   const sortOptions = [
     "Newest",
