@@ -20,6 +20,10 @@ const ProductCard = () => {
   const [activeSort, setActiveSort] = useState("Newest");
   const [loading, setLoading] = useState(true);
 
+
+const isAddressCompleted = localStorage.getItem("isAddressCompleted") === "true";
+
+
   const sortOptions = [
     "Newest",
     "Most Popular",
@@ -64,10 +68,20 @@ const ProductCard = () => {
 
   const handleAddToCart = async (redirectToCart = false) => {
     const googleId = localStorage.getItem('googleId');
+
+const isAddressCompleted = localStorage.getItem("isAddressCompleted") === "true";
+
     if (!googleId) {
       alert("Please login to add items to cart");
       return;
     }
+
+if (!isAddressCompleted) {
+    alert("Please complete your address before purchasing.");
+    navigate("/account"); // or your address form page
+    return;
+  }
+
 
     if (!selectedProduct) return;
 
@@ -242,14 +256,21 @@ const ProductCard = () => {
                       <li>You’ll be redirected to Tradetron — just click <strong>“Subscribe”</strong> to confirm.</li>
                     </ol>
 
-                    <a
-                      href={selectedProduct.tradetronLink || "https://www.tradetron.tech"}
-                      className="pc-buy"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Click Here to Subscribe
-                    </a>
+                  {!isAddressCompleted ? (
+  <p style={{ color: 'red', margin: '1rem 0' }}>
+    Please complete your address to subscribe.
+  </p>
+) : (
+  <a
+    href={selectedProduct.tradetronLink || "https://www.tradetron.tech"}
+    className="pc-buy"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    Click Here to Subscribe
+  </a>
+)}
+
                   </div>
                 </>
               )}
