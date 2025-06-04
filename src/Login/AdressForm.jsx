@@ -74,7 +74,11 @@ localStorage.setItem('addressCompleted', 'true');
       <h2 className="form-title">Add New Address</h2>
       <div className="form-grid">
         <input name="name" placeholder="Name *" required onChange={handleChange} value={formData.name} />
-        <input name="mobile" placeholder="Please enter your active or working mobile number" required onChange={handleChange} value={formData.mobile} />
+        <div className="form-group-full">
+  <label className="note-red">* Enter your mobile number (preferably WhatsApp)</label>
+  <input name="mobile" placeholder="Mobile Number" required onChange={handleChange} value={formData.mobile} />
+</div>
+
         <input name="email" placeholder="Email Address *" value={formData.email} onChange={handleChange} />
         <input name="address" placeholder="Address *" required onChange={handleChange} value={formData.address} />
         <input name="locality" placeholder="Locality / Area (optional)" onChange={handleChange} value={formData.locality} />
