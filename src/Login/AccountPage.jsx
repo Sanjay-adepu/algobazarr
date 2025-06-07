@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { FiShoppingBag, FiMapPin, FiLogOut } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import Footer from "../Footer/Footer.jsx";
+
+
 const AccountPage = ({ handleSignOut }) => {
   const [email, setEmail] = useState('');
 
@@ -14,172 +15,120 @@ const AccountPage = ({ handleSignOut }) => {
 
   return (
     <>
-      <style>{`
-      body{
-      
+<style>{`
+  .accountWrapper {
+    padding: 2rem 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
 
-  overflow: hidden;
-}
-        .profile-container {
-          max-width: 860px;
-          margin: 60px auto;
-          padding: 2.5rem;
-          background-color: #ffffff;
-          border-radius: 18px;
-          box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
-          font-family: 'Helvetica Neue', 'Segoe UI', sans-serif;
-        }
+  .accountContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
 
-        .profile-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          flex-wrap: wrap;
-          border-bottom: 1px solid #eee;
-          padding-bottom: 1.2rem;
-          margin-bottom: 2.5rem;
-        }
+  .accountHeader {
+    text-align: center;
+  }
 
-        .profile-title {
-          font-size: 2rem;
-          font-weight: 700;
-          color: #1c1c1c;
-        }
+  .accountTitle {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #222;
+  }
 
-        .user-email {
-          font-size: 1rem;
-          color: #777;
-          font-weight: 500;
-        }
+  .accountEmail {
+    font-size: 1rem;
+    color: #555;
+  }
 
-        .profile-options-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-          gap: 1.8rem;
-        }
+  .optionsGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
 
-        .account-option-card {
-          background: #fafafa;
-          border: 1px solid #e0e0e0;
-          border-radius: 14px;
-          padding: 1.6rem;
-          text-align: center;
-          cursor: pointer;
-          transition: all 0.2s ease-in-out;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-        }
+  .optionCard {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: #f5f5f5;
+    border-radius: 12px;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+  }
 
-        .account-option-card:hover {
-          background-color: #f0f8ff;
-          transform: translateY(-6px);
-          box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
-        }
+  .optionCard:hover {
+    background-color: #eaeaea;
+  }
 
-        .option-icon {
-          font-size: 2.2rem;
-          color: #004aad;
-          margin-bottom: 0.7rem;
-        }
+  .optionIcon {
+    font-size: 1.5rem;
+    color: #333;
+  }
 
-        .option-label {
-          font-size: 1.05rem;
-          font-weight: 600;
-          color: #2c2c2c;
-        }
+  .optionLabel {
+    font-size: 0.8rem;
+    color: #222;
+    font-weight: 500;
+  }
 
-        .logout-option {
-          background-color: #fff4f4;
-          border-color: #ffd6d6;
-        }
+  .logoutCard {
+    color: #d32f2f;
+    background-color: #fdecea;
+  }
 
-        .logout-option .option-icon {
-          color: #d63031;
-        }
+  .logoutCard:hover {
+    background-color: #fbd5d2;
+  }
 
-        @media (max-width: 600px) {
-          .profile-container {
-            padding: 0.5rem 4rem;
-            
-            margin: 40px 1rem;
-            padding-bottom:90px;
-            border-radius:0px;
-            margin-top:70px
-box-shadow:none !important;
+  @media (min-width: 600px) {
+    .optionsGrid {
+      flex-direction: row;
+      justify-content: space-between;
+    }
 
-  padding-top:30x;
-  
+    .optionCard {
+      flex: 1;
+      justify-content: center;
+    }
+  }
+`}</style>
 
-          }
-          
-                  .account-option-card {
-          background: #fafafa;
-          border: 1px solid #e0e0e0;
-          border-radius: 14px;
-          padding: 0.52rem;
-          text-align: center;
-          cursor: pointer;
-          transition: all 0.2s ease-in-out;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-        }
+      <div className="accountWrapper">
+        <div className="accountContainer">
+          <div className="accountHeader">
+            <h2 className="accountTitle">My Account</h2>
+            {email && <span className="accountEmail">{email}</span>}
+          </div>
 
-          .profile-title {
-            font-size: 1.5rem;
-          }
+          <div className="optionsGrid">
+            <Link to="/order" style={{ textDecoration: 'none' }}>
+              <div className="optionCard">
+                <FiShoppingBag className="optionIcon" />
+                <div className="optionLabel">My Orders</div>
+              </div>
+            </Link>
 
-          .option-label {
-            font-size: 0.65rem;
-          }
+            <Link to="/my-address" style={{ textDecoration: 'none' }}>
+              <div className="optionCard">
+                <FiMapPin className="optionIcon" />
+                <div className="optionLabel">My Addresses</div>
+              </div>
+            </Link>
 
-          .option-icon {
-            font-size: 0.86rem;
-          }
-          .o{
-          display:flex;
-          flex-direction:column;
-        }
-      `}</style>
-      <div className="o">
-
-      <div className="profile-container">
-        <div className="profile-header">
-          <h2 className="profile-title">My Account</h2>
-          {email && <span className="user-email">{email}</span>}
-        </div>
-
-        <div className="profile-options-grid">
-          <Link to="/order" style={{ textDecoration: 'none' }}>
-            <div className="account-option-card">
-              <FiShoppingBag className="option-icon" />
-              <div className="option-label">My Orders</div>
+            <div className="optionCard logoutCard" onClick={handleSignOut}>
+              <FiLogOut className="optionIcon" />
+              <div className="optionLabel">Sign Out</div>
             </div>
-          </Link>
-
-          <Link to="/my-address" style={{ textDecoration: 'none' }}>
-            <div className="account-option-card">
-              <FiMapPin className="option-icon" />
-              <div className="option-label">My Addresses</div>
-            </div>
-          </Link>
-
-          <div
-            className="account-option-card logout-option"
-            onClick={handleSignOut}
-          >
-            <FiLogOut className="option-icon" />
-            <div className="option-label">Sign Out</div>
           </div>
         </div>
-     
-      </div>
-      <div className="v">
-         <Footer/>
-         </div>
+
+      
       </div>
     </>
   );
