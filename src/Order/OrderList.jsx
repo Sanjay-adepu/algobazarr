@@ -165,7 +165,8 @@ const OrderList = () => {
 
             <div className="selected-order-card">
               <div className="order-brand">
-                <img src="../../public/file_00000000010c6230ad42158a28f2acff.jpg" alt="AlgoTRONN" />
+                <img src="https://res.cloudinary.com/dppiuypop/image/upload/v1749013255/uploads/nk1oegfjvhxsnwosmklh.jpg"
+/>
               </div>
 
               <div className="order-details-bar">
