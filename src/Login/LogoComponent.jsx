@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import './LogoComponent.css';
 import Navbar from '../Navbar/Navbar';
-import { Link } from "react-router-dom";
 import AddressForm from './AdressForm.jsx';
 import AccountPage from './AccountPage';
+import { Link } from 'react-router-dom';
 
 const LogoComponent = () => {
   const [accountDetails, setAccountDetails] = useState(null);
@@ -14,6 +13,7 @@ const LogoComponent = () => {
     name: '',
     mobile: '',
     email: '',
+    password: '',
     address: '',
     locality: '',
     landmark: '',
@@ -22,12 +22,115 @@ const LogoComponent = () => {
     state: '',
   });
 
+  const handleChange = (e) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleCredentialResponse = async (response) => {
+    setLoading(true);
+    try {
+      const res = await fetch('https://algotronn-backend.vercel.app/api/google-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: response.credential }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        localStorage.setItem('googleId', data.user.googleId);
+        localStorage.setItem('email', data.user.email);
+        setAccountDetails(data.user);
+        setFormData(prev => ({ ...prev, email: data.user.email }));
+        setView(data.isNewUser ? 'address' : 'account');
+      } else {
+        alert('Google login failed');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('An error occurred during Google login.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAuthSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const endpoint =
+        view === 'signup'
+          ? 'https://algotronn-backend.vercel.app/signup1'
+          : 'https://algotronn-backend.vercel.app/login1';
+
+      const payload =
+        view === 'signup'
+          ? {
+              username: formData.name,
+              email: formData.email,
+              password: formData.password,
+              mobile: formData.mobile || '0000000000',
+            }
+          : {
+              email: formData.email,
+              password: formData.password,
+            };
+
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        localStorage.setItem('googleId', data.user.googleId);
+        localStorage.setItem('email', data.user.email);
+        setAccountDetails(data.user);
+        setFormData(prev => ({ ...prev, email: data.user.email }));
+        setView(view === 'signup' ? 'address' : 'account');
+      } else {
+        alert(data.message || 'Authentication failed');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('An error occurred. Try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAddressSubmit = (e) => {
+    e.preventDefault();
+    alert('Address submitted successfully!');
+    setView('account');
+  };
+
+  const handleSignOut = () => {
+    localStorage.removeItem('googleId');
+    localStorage.removeItem('email');
+    setAccountDetails(null);
+    setFormData({
+      name: '',
+      mobile: '',
+      email: '',
+      password: '',
+      address: '',
+      locality: '',
+      landmark: '',
+      pincode: '',
+      city: '',
+      state: '',
+    });
+    setView('signin');
+  };
+
   const renderGoogleButton = (viewType) => {
     const container = document.getElementById('googleSignInDiv');
     if (!container || !window.google?.accounts?.id) return;
 
-    container.innerHTML = ''; // Clear previous button
-
+    container.innerHTML = '';
     window.google.accounts.id.renderButton(container, {
       theme: 'outline',
       size: 'large',
@@ -35,7 +138,6 @@ const LogoComponent = () => {
       text: 'continue_with',
     });
 
-    // Change button text manually
     setTimeout(() => {
       const textSpan = container.querySelector('span');
       if (textSpan) {
@@ -52,7 +154,6 @@ const LogoComponent = () => {
       setFormData(prev => ({ ...prev, email: storedEmail }));
       setView('account');
     } else {
-      // ✅ Fix: explicitly set view to 'signin' if not logged in
       setView('signin');
     }
 
@@ -73,8 +174,6 @@ const LogoComponent = () => {
       });
 
       renderGoogleButton(view);
-
-      // 💥 Cancel any One Tap UI
       window.google.accounts.id.cancel();
     };
 
@@ -89,109 +188,217 @@ const LogoComponent = () => {
     }
   }, [view]);
 
-  const handleCredentialResponse = async (response) => {
-    try {
-      setLoading(true);
-
-      const res = await fetch('https://algotronn-backend.vercel.app/api/google-login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token: response.credential }),
-      });
-
-      const data = await res.json();
-
-      if (data.success) {
-        localStorage.setItem('googleId', data.user.googleId);
-        localStorage.setItem('email', data.user.email);
-
-        setAccountDetails(data.user);
-        setFormData(prev => ({ ...prev, email: data.user.email }));
-
-        setTimeout(() => {
-          setView(data.isNewUser ? 'address' : 'account');
-          setLoading(false);
-        }, 1000);
-      } else {
-        alert('Login failed');
-        setLoading(false);
-      }
-    } catch (err) {
-      console.error(err);
-      alert('An error occurred during login.');
-      setLoading(false);
-    }
-  };
-
-  const handleChange = (e) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert('Address submitted successfully!');
-    setView('account');
-  };
-
-  const handleSignOut = () => {
-    localStorage.removeItem('googleId');
-    localStorage.removeItem('email');
-    setAccountDetails(null);
-    setFormData({
-      name: '',
-      mobile: '',
-      email: '',
-      address: '',
-      locality: '',
-      landmark: '',
-      pincode: '',
-      city: '',
-      state: '',
-    });
-    setView('signin');
-  };
-
   return (
     <>
+      <style>{`  
+.auth-wrapper {  
+max-width: 440px;  
+margin: 5rem auto;  
+padding: 2rem;  
+background-color: #fff;  
+border-radius: 12px;  
+box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);  
+animation: fadeIn 0.3s ease-in-out;  
+margin-top:15%;  
+}  
+  
+.auth-header {      
+      font-size: 1.8rem;      
+      font-weight: 700;      
+      color: #1f2937;      
+      text-align: center;      
+    }      
+  
+    .auth-form {      
+      display: flex;      
+      flex-direction: column;      
+      gap: 1rem;      
+      margin-top: 1rem;      
+    }      
+  
+    .auth-input {      
+      padding: 12px 14px;      
+      border: 1px solid #d1d5db;      
+      border-radius: 8px;      
+      font-size: 1rem;      
+    }      
+  
+    .auth-button {      
+      padding: 12px;      
+      background-color: #2563eb;      
+      color: #fff;      
+      font-weight: 600;      
+      border: none;      
+      border-radius: 8px;      
+      cursor: pointer;      
+      transition: background-color 0.3s ease;      
+    }      
+  
+    .auth-button:hover {      
+      background-color: #1e40af;      
+    }      
+  
+    .auth-terms {      
+      display: flex;      
+      align-items: flex-start;      
+      gap: 0.5rem;      
+      font-size: 0.85rem;      
+      color: #4b5563;      
+      margin-top: 0.5rem;      
+    }      
+  
+    .auth-terms input {      
+      margin-top: 3px;      
+    }      
+  
+    .auth-switch {      
+      text-align: center;      
+      margin-top: 1rem;      
+      font-size: 0.95rem;      
+    }      
+  
+    .auth-link {      
+      color: #2563eb;      
+      font-weight: 500;      
+      cursor: pointer;      
+    }      
+  
+    .auth-link:hover {      
+      text-decoration: underline;      
+    }      
+  
+    .loading-section {      
+      display: flex;      
+      flex-direction: column;      
+      align-items: center;      
+      gap: 1rem;      
+      padding: 2rem 0;      
+    }      
+  
+    .spinner {      
+      width: 40px;      
+      height: 40px;      
+      border: 4px solid #d1d5db;      
+      border-top-color: #2563eb;      
+      border-radius: 50%;      
+      animation: spin 1s linear infinite;      
+    }      
+    #g{      
+    text-decoration:none;      
+    color:red;      
+    }      
+    #k{
+    text-align:center;
+    font-size:10px;
+    }
+    @keyframes spin {      
+      to {      
+        transform: rotate(360deg);      
+      }      
+    }      
+  
+    @keyframes fadeIn {      
+      from {      
+        opacity: 0;      
+        transform: translateY(10px);      
+      }      
+      to {      
+        opacity: 1;      
+        transform: translateY(0);      
+      }      
+    }      
+  
+    @media (max-width: 460px) {      
+      .auth-wrapper {      
+        margin: 2rem 1rem;      
+        padding: 1.5rem;      
+        margin-top:120px !important;      
+      }      
+    .auth-switch {      
+      text-align: center;      
+      margin-top: 1rem;      
+      font-size: 0.67rem;      
+    }      
+      .auth-header {      
+        font-size: 1rem;      
+      }      
+    .auth-terms {      
+      display: flex;      
+      align-items: flex-start;      
+      gap: 0.5rem;      
+      font-size: 0.57rem;      
+      color: #4b5563;      
+      margin-top: 0.5rem;      
+    }      
+      .auth-button,      
+      .auth-input {      
+        font-size: 0.7rem;      
+      }      
+    }      
+  `}</style>  
       <Navbar />
-      <div className="auth-container fade-in">
-        {loading && (
-          <div className="loading-overlay">
-            <div className="spinner"></div>
-            <p>Logging you in...</p>
-          </div>
-        )}
+      <div className="auth-wrapper">
+        {loading ? (
+              <div className="loading-container">
+                <div className="loader"></div>
+                <p style={{ marginTop: "1rem", fontSize: "1rem", color: "#555" }}>
+                  Loading, please wait...
+                </p>
+              </div>
+        ) : (
+          <>
+            {(view === 'signin' || view === 'signup') && (
+              <>
+                <h2 className="auth-header">{view === 'signup' ? 'Sign Up' : 'Login'}</h2>
+                <form onSubmit={handleAuthSubmit} className="auth-form">
+                  {view === 'signup' && (
+                    <>
+                      <input className="auth-input" type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Name" required />
+                      <input className="auth-input" type="text" name="mobile" value={formData.mobile} onChange={handleChange} placeholder="Mobile" required />
+                    </>
+                  )}
+                  <input className="auth-input" type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" required />
+                  <input className="auth-input" type="password" name="password" value={formData.password} onChange={handleChange} placeholder="Password" required />
+                  <button type="submit" className="auth-button">
+                    {view === 'signup' ? 'Create Account' : 'Login'}
+                  </button>
+                  <label className="auth-terms">
+                    <input type="checkbox" defaultChecked />
+                    <span>
+                      By continuing, I agree to the&nbsp;
+                      <Link to="/terms" id="g">terms of use</Link>&nbsp;and&nbsp;
+                      <Link to="/policy" id="g">privacy policy</Link>.
+                    </span>
+                  </label>
+                </form>
+                <h4 id="k">OR</h4>
 
-        {!loading && (view === 'signin' || view === 'signup') && (
-          <div className="auth-card">
-            <div className="tab-switcher">
-              <button className={`tab-btn ${view === 'signin' ? 'active' : ''}`} onClick={() => setView('signin')}>Sign In</button>
-              <button className={`tab-btn ${view === 'signup' ? 'active' : ''}`} onClick={() => setView('signup')}>Sign Up</button>
-            </div>
+                <div style={{ marginTop: '1rem' }} id="googleSignInDiv"></div>
 
-            <div className="lock-icon">
-              <span role="img" aria-label="lock">🔒</span>
-            </div>
+                <p className="auth-switch">
+                  {view === 'signin' ? (
+                    <>
+                      Don’t have an account?{' '}
+                      <span className="auth-link" onClick={() => setView('signup')}>Sign Up</span>
+                    </>
+                  ) : (
+                    <>
+                      Already have an account?{' '}
+                      <span className="auth-link" onClick={() => setView('signin')}>Login</span>
+                    </>
+                  )}
+                </p>
+              </>
+            )}
 
-            <h2 className="login-title">{view === 'signup' ? 'Create Your Account' : 'Login to Your Account'}</h2>
-            <p className="login-subtext">
-              {view === 'signup' ? 'Use Google to create a new account' : 'Quick access using your Google Account'}
-            </p>
+            {view === 'address' && (
+              <AddressForm formData={formData} handleChange={handleChange} handleSubmit={handleAddressSubmit} />
+            )}
 
-            <div id="googleSignInDiv" className="google-btn-container"></div>
-
-            <p className="terms">
-              By continuing, you agree to our <Link to="/terms">Terms of Service</Link> and <Link to="/policy">Privacy Policy</Link>.
-            </p>
-          </div>
-        )}
-
-        {!loading && view === 'address' && (
-          <AddressForm formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} />
-        )}
-
-        {!loading && view === 'account' && (
-          <AccountPage formData={formData} handleSignOut={handleSignOut} />
+            {view === 'account' && (
+              <AccountPage formData={formData} handleSignOut={handleSignOut} />
+            )}
+          </>
         )}
       </div>
     </>
