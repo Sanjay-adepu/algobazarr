@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./OrderList.css";
 import Navbar from "../Navbar/Navbar.jsx";
 
-const adminWhatsAppNumber = '918142216171'; // Ensure no spaces in number
+const adminWhatsAppNumber = '918142216171'; // No spaces
 
 const formatOrderTime = () => {
   const options = {
@@ -17,32 +17,11 @@ const formatOrderTime = () => {
   return new Date().toLocaleString('en-IN', options);
 };
 
-const sendCancellationToWhatsApp = (order) => {
-  const { orderId, items, totalAmount, address } = order;
-
-  let message = `❌ *Order Cancelled*\n\n`;
-  message += `🆔 *Order ID:* ${orderId}\n`;
-  message += `👤 *Customer Name:* ${address.name}\n`;
-  message += `📱 *Mobile:* ${address.mobile}\n`;
-  message += `📧 *Email:* ${address.email}\n\n`;
-  message += `📦 *Items:*\n`;
-
-  items.forEach((item, idx) => {
-    message += `${idx + 1}. ${item.name}\n   Price: ₹${item.price} x ${item.quantity}\n`;
-  });
-
-  message += `💰 *Total:* ₹${totalAmount}\n\n`;
-  message += `📍 *Address:*\n${address.address}, ${address.city}, ${address.state} - ${address.pincode}\n\n`;
-  message += `🕒 *Cancelled At:* ${formatOrderTime()}`;
-
-  const whatsappUrl = `https://wa.me/${adminWhatsAppNumber}?text=${encodeURIComponent(message)}`;
-  window.open(whatsappUrl, '_blank');
-};
-
 const OrderList = () => {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [cancelling, setCancelling] = useState(false);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -75,11 +54,14 @@ const OrderList = () => {
     if (!confirmCancel) return;
 
     try {
+      setCancelling(true); // Show loading
+
       const response = await fetch(`https://algotronn-backend.vercel.app/mark-cancelled/${orderId}`);
       const text = await response.text();
 
       if (response.ok) {
-        alert(text);
+        
+
         setOrders(prev =>
           prev.map(order =>
             order.orderId === orderId ? { ...order, status: 'Cancelled' } : order
@@ -91,15 +73,37 @@ const OrderList = () => {
 
         const cancelledOrder = orders.find(order => order.orderId === orderId);
         if (cancelledOrder) {
-          sendCancellationToWhatsApp(cancelledOrder);
-        }
+          const { orderId, items, totalAmount, address } = cancelledOrder;
 
+          let message = `❌ *Order Cancelled*\n\n`;
+          message += `🆔 *Order ID:* ${orderId}\n`;
+          message += `👤 *Customer Name:* ${address.name}\n`;
+          message += `📱 *Mobile:* ${address.mobile}\n`;
+          message += `📧 *Email:* ${address.email}\n\n`;
+          message += `📦 *Items:*\n`;
+
+          items.forEach((item, idx) => {
+            message += `${idx + 1}. ${item.name}\n   Price: ₹${item.price} x ${item.quantity}\n`;
+          });
+
+          message += `💰 *Total:* ₹${totalAmount}\n\n`;
+          message += `📍 *Address:*\n${address.address}, ${address.city}, ${address.state} - ${address.pincode}\n\n`;
+          message += `🕒 *Cancelled At:* ${formatOrderTime()}`;
+
+          const whatsappUrl = `https://wa.me/${adminWhatsAppNumber}?text=${encodeURIComponent(message)}`;
+
+          setTimeout(() => {
+            window.location.href = whatsappUrl;
+          }, 300); // small delay to show loader
+        }
       } else {
         alert(`Failed to cancel order: ${text}`);
+        setCancelling(false);
       }
     } catch (err) {
       console.error("Error cancelling order:", err);
       alert("Something went wrong. Please try again.");
+      setCancelling(false);
     }
   };
 
@@ -108,7 +112,14 @@ const OrderList = () => {
       <Navbar />
 
       <div className="order-container">
-        {!selectedOrder ? (
+        {cancelling ? (
+          <div className="loading-container">
+            <div className="loader"></div>
+            <p style={{ marginTop: "1rem", fontSize: "1rem", color: "#555" }}>
+              Cancelling your order, please wait...
+            </p>
+          </div>
+        ) : !selectedOrder ? (
           <>
             <h2 style={{ fontFamily: "'Tinos', serif", fontWeight: 700 }}>My Orders</h2>
 
