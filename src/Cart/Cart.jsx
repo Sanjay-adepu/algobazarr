@@ -71,56 +71,60 @@ const Cart = () => {
     cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   const handleContinue = async () => {
-    const googleId = getGoogleId();
-    if (!googleId) {
-      alert('User not logged in');
-      return;
-    }
+  const googleId = getGoogleId();
+  if (!googleId) {
+    alert('User not logged in');
+    return;
+  }
 
-    setProcessing(true); // Start loading
+  setProcessing(true); // Start loading
 
-    try {
-      const orderRes = await axios.post('https://algotronn-backend.vercel.app/place-order', {
-        googleId,
+  try {
+    const orderRes = await axios.post('https://algotronn-backend.vercel.app/place-order', {
+      googleId,
+    });
+
+    if (orderRes.data.success && orderRes.data.order) {
+      const order = orderRes.data.order;
+      const { orderId, items, totalAmount, address, mobile, email } = order;
+
+      let message = `🛒 *New Order Received*\n\n`;
+      message += `🆔 *Order ID:* ${orderId}\n`;
+      message += `👤 *Customer Name:* ${order.name}\n`;
+      message += `📱 *Mobile:* ${mobile}\n`;
+      message += `📧 *Email:* ${email}\n\n`;
+      message += `📦 *Order Items:*\n`;
+
+      items.forEach((item, idx) => {
+        message += `${idx + 1}. ${item.name}\n`;
+        message += `   Price: ₹${item.price}\n`;
       });
 
-      if (orderRes.data.success && orderRes.data.order) {
-        const order = orderRes.data.order;
-        const { orderId, items, totalAmount, address } = order;
+      message += `💰 *Total Amount:* ₹${totalAmount}\n\n`;
 
-        let message = `🛒 *New Order Received*\n\n`;
-        message += `🆔 *Order ID:* ${orderId}\n`;
-        message += `👤 *Customer Name:* ${address.name}\n`;
-        message += `📱 *Mobile:* ${address.mobile}\n`;
-        message += `📧 *Email:* ${address.email}\n\n`;
-        message += `📦 *Order Items:*\n`;
-
-        items.forEach((item, idx) => {
-          message += `${idx + 1}. ${item.name}\n`;
-          message += `   Price: ₹${item.price}\n`;
-        });
-
-        message += `💰 *Total Amount:* ₹${totalAmount}\n\n`;
+      if (address && address.address && address.city && address.state && address.pincode) {
         message += `📍 *Shipping Address:*\n`;
         message += `${address.address}, ${address.city}, ${address.state} - ${address.pincode}\n\n`;
-        message += `🕒 *Order Time:* ${formatOrderTime()}\n\n`;
-        message += `Please process this order at your earliest convenience.`;
-
-        const whatsappUrl = `https://wa.me/${adminWhatsAppNumber}?text=${encodeURIComponent(message)}`;
-        window.open(whatsappUrl, '_blank');
-
-        setViewState('confirmation');
       } else {
-        alert('Failed to place order. Please try again.');
+        message += `📍 *Shipping Address:* Not provided\n\n`;
       }
-    } catch (error) {
-      console.error('Error placing order:', error);
-      alert('Something went wrong. Please try again later.');
-    } finally {
-      setProcessing(false); // Stop loading
-    }
-  };
 
+      message += `🕒 *Order Time:* ${formatOrderTime()}\n\n`;
+      message += `Please process this order at your earliest convenience.`;
+
+      const whatsappUrl = `https://wa.me/${adminWhatsAppNumber}?text=${encodeURIComponent(message)}`;
+
+      window.location.href = whatsappUrl; // Redirect and keep spinner
+    } else {
+      alert('Failed to place order. Please try again.');
+      setProcessing(false); // Only stop loading on failure
+    }
+  } catch (error) {
+    console.error('Error placing order:', error);
+    alert('Something went wrong. Please try again later.');
+    setProcessing(false);
+  }
+};
   return (
     <>
       <Navbar />
