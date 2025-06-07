@@ -137,7 +137,8 @@ const OrderList = () => {
                 <div className="order-card" key={index} onClick={() => setSelectedOrder(order)}>
                   <div className="selected-order-card">
                     <div className="order-brand">
-                      <img src="../../public/file_00000000a4bc62309fd4ab8b35a5021c.jpg" alt="AlgoTRONN" />
+                                                <img  src="https://res.cloudinary.com/dppiuypop/image/upload/v1749013255/uploads/nk1oegfjvhxsnwosmklh.jpg"
+/>
                     </div>
                     <div className="order-details-bar">
                       <p><span id="H">ORDER ID</span> : {order.orderId}</p>
