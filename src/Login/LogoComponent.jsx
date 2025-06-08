@@ -166,21 +166,24 @@ script.async = true;
 script.defer = true;    
 document.body.appendChild(script);    
 
-script.onload = () => {    
-  if (!window.google || !window.google.accounts) return;    
+script.onload = () => {
+  if (!window.google || !window.google.accounts) return;
+
+  // Cancel any leftover sessions or auto-prompt before initializing
+  window.google.accounts.id.cancel(); // 👈 Call this FIRST
 
   window.google.accounts.id.initialize({
+    client_id: '741240365062-r2te32gvukmekm4r55l4ishc0mhsk4f9.apps.googleusercontent.com',
+    callback: handleCredentialResponse,
+    ux_mode: 'popup',
+    auto_select: false, // ✅ Do not auto-select previously signed-in accounts
+    auto_prompt: false, // ✅ Prevent One Tap prompt
+    prompt_parent_id: 'googleSignInDiv',
+  });
 
-client_id: '741240365062-r2te32gvukmekm4r55l4ishc0mhsk4f9.apps.googleusercontent.com',
-callback: handleCredentialResponse,
-auto_select: false,
-auto_prompt: false, // 👈 This prevents the One Tap / dropdown
-ux_mode: 'popup',
-});
-
-renderGoogleButton(view);    
-  window.google.accounts.id.cancel();    
-};    
+  // Only render button (no automatic dropdown behavior)
+  renderGoogleButton(view);
+};
 
 return () => {    
   window.google?.accounts?.id?.cancel();    
