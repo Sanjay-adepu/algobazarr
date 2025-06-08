@@ -156,6 +156,9 @@ setTimeout(() => {
 
 };
 
+
+
+
 useEffect(() => {
   const storedGoogleId = localStorage.getItem('googleId');
   const storedEmail = localStorage.getItem('email');
@@ -167,7 +170,6 @@ useEffect(() => {
     setView('signin');
   }
 
-  // Load the Google Sign-In script
   const script = document.createElement('script');
   script.src = 'https://accounts.google.com/gsi/client';
   script.async = true;
@@ -177,33 +179,34 @@ useEffect(() => {
   script.onload = () => {
     if (!window.google || !window.google.accounts) return;
 
-    // Cancel any One Tap UI or auto-prompts
-    window.google.accounts.id.cancel();
+    // Important: Delay cancellation to override Google's internal prompt queue
+    setTimeout(() => {
+      window.google.accounts.id.cancel(); // Force-cancel any prompt
+      window.google.accounts.id.disableAutoSelect();
+    }, 0);
 
-    // Disable account auto-selection from previous sessions
-    window.google.accounts.id.disableAutoSelect();
-
-    // Initialize Google Sign-In with strict popup only, no One Tap, no dropdown
     window.google.accounts.id.initialize({
       client_id: '741240365062-r2te32gvukmekm4r55l4ishc0mhsk4f9.apps.googleusercontent.com',
       callback: handleCredentialResponse,
       ux_mode: 'popup',
       auto_select: false,
       auto_prompt: false,
-      context: 'use', // Only proceed if user actively initiates
+      context: 'use',
       prompt_parent_id: 'googleSignInDiv',
     });
 
-    // Render the custom Google button
+    // Just render the button. No `prompt()` call at all.
     renderGoogleButton(view);
   };
 
   return () => {
-    // Clean up on unmount
     window.google?.accounts?.id?.cancel?.();
     window.google?.accounts?.id?.disableAutoSelect?.();
   };
 }, []);
+
+
+
 
 
 useEffect(() => {
@@ -307,6 +310,13 @@ text-align: center;
   border-radius: 50%;          
   animation: spin 1s linear infinite;          
 }          
+
+iframe[src^="https://accounts.google.com/gsi/iframe/select"] {
+  display: none !important;
+}
+
+
+
 #g{          
 text-decoration:none;          
 color:red;          
