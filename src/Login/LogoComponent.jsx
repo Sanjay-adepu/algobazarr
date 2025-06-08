@@ -167,11 +167,12 @@ const LogoComponent = () => {
       if (!window.google || !window.google.accounts) return;
 
       window.google.accounts.id.initialize({
-        client_id: '741240365062-r2te32gvukmekm4r55l4ishc0mhsk4f9.apps.googleusercontent.com',
-        callback: handleCredentialResponse,
-        auto_select: false,
-        ux_mode: 'popup',
-      });
+  client_id: '741240365062-r2te32gvukmekm4r55l4ishc0mhsk4f9.apps.googleusercontent.com',
+  callback: handleCredentialResponse,
+  auto_select: false,
+  auto_prompt: false, // 👈 This prevents the One Tap / dropdown
+  ux_mode: 'popup',
+});
 
       renderGoogleButton(view);
       window.google.accounts.id.cancel();
