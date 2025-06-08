@@ -159,7 +159,14 @@ setTimeout(() => {
 
 
 
+
 useEffect(() => {
+  // Always attempt to cancel and disable immediately
+  if (window.google?.accounts?.id) {
+    window.google.accounts.id.cancel();
+    window.google.accounts.id.disableAutoSelect();
+  }
+
   const storedGoogleId = localStorage.getItem('googleId');
   const storedEmail = localStorage.getItem('email');
 
@@ -174,16 +181,13 @@ useEffect(() => {
   script.src = 'https://accounts.google.com/gsi/client';
   script.async = true;
   script.defer = true;
-  document.body.appendChild(script);
 
   script.onload = () => {
-    if (!window.google || !window.google.accounts) return;
+    if (!window.google || !window.google.accounts?.id) return;
 
-    // Important: Delay cancellation to override Google's internal prompt queue
-    setTimeout(() => {
-      window.google.accounts.id.cancel(); // Force-cancel any prompt
-      window.google.accounts.id.disableAutoSelect();
-    }, 0);
+    // Cancel and disable again after load to override any Google caching
+    window.google.accounts.id.cancel();
+    window.google.accounts.id.disableAutoSelect();
 
     window.google.accounts.id.initialize({
       client_id: '741240365062-r2te32gvukmekm4r55l4ishc0mhsk4f9.apps.googleusercontent.com',
@@ -195,11 +199,13 @@ useEffect(() => {
       prompt_parent_id: 'googleSignInDiv',
     });
 
-    // Just render the button. No `prompt()` call at all.
-    renderGoogleButton(view);
+    renderGoogleButton(view); // popup-only
   };
 
+  document.body.appendChild(script);
+
   return () => {
+    // Cleanup on unmount
     window.google?.accounts?.id?.cancel?.();
     window.google?.accounts?.id?.disableAutoSelect?.();
   };
