@@ -166,16 +166,19 @@ const LogoComponent = () => {
     script.onload = () => {
       if (!window.google || !window.google.accounts) return;
 
+      // Cancel any One Tap prompt that might be cached
+      window.google.accounts.id.cancel();
+
+      // Initialize with popup mode only
       window.google.accounts.id.initialize({
-  client_id: '741240365062-r2te32gvukmekm4r55l4ishc0mhsk4f9.apps.googleusercontent.com',
-  callback: handleCredentialResponse,
-  auto_select: false,
-  auto_prompt: false, // 👈 This prevents the One Tap / dropdown
-  ux_mode: 'popup',
-});
+        client_id: '741240365062-r2te32gvukmekm4r55l4ishc0mhsk4f9.apps.googleusercontent.com',
+        callback: handleCredentialResponse,
+        ux_mode: 'popup',
+        auto_select: false,
+        prompt_parent_id: 'googleSignInDiv'
+      });
 
       renderGoogleButton(view);
-      window.google.accounts.id.cancel();
     };
 
     return () => {
@@ -191,161 +194,13 @@ const LogoComponent = () => {
 
   return (
     <>
-      <style>{`  
-.auth-wrapper {  
-max-width: 440px;  
-margin: 5rem auto;  
-padding: 2rem;  
-background-color: #fff;  
-border-radius: 12px;  
-box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);  
-animation: fadeIn 0.3s ease-in-out;  
-margin-top:15%;  
-}  
-  
-.auth-header {      
-      font-size: 1.8rem;      
-      font-weight: 700;      
-      color: #1f2937;      
-      text-align: center;      
-    }      
-  
-    .auth-form {      
-      display: flex;      
-      flex-direction: column;      
-      gap: 1rem;      
-      margin-top: 1rem;      
-    }      
-  
-    .auth-input {      
-      padding: 12px 14px;      
-      border: 1px solid #d1d5db;      
-      border-radius: 8px;      
-      font-size: 1rem;      
-    }      
-  
-    .auth-button {      
-      padding: 12px;      
-      background-color: #2563eb;      
-      color: #fff;      
-      font-weight: 600;      
-      border: none;      
-      border-radius: 8px;      
-      cursor: pointer;      
-      transition: background-color 0.3s ease;      
-    }      
-  
-    .auth-button:hover {      
-      background-color: #1e40af;      
-    }      
-  
-    .auth-terms {      
-      display: flex;      
-      align-items: flex-start;      
-      gap: 0.5rem;      
-      font-size: 0.85rem;      
-      color: #4b5563;      
-      margin-top: 0.5rem;      
-    }      
-  
-    .auth-terms input {      
-      margin-top: 3px;      
-    }      
-  
-    .auth-switch {      
-      text-align: center;      
-      margin-top: 1rem;      
-      font-size: 0.95rem;      
-    }      
-  
-    .auth-link {      
-      color: #2563eb;      
-      font-weight: 500;      
-      cursor: pointer;      
-    }      
-  
-    .auth-link:hover {      
-      text-decoration: underline;      
-    }      
-  
-    .loading-section {      
-      display: flex;      
-      flex-direction: column;      
-      align-items: center;      
-      gap: 1rem;      
-      padding: 2rem 0;      
-    }      
-  
-    .spinner {      
-      width: 40px;      
-      height: 40px;      
-      border: 4px solid #d1d5db;      
-      border-top-color: #2563eb;      
-      border-radius: 50%;      
-      animation: spin 1s linear infinite;      
-    }      
-    #g{      
-    text-decoration:none;      
-    color:red;      
-    }      
-    #k{
-    text-align:center;
-    font-size:10px;
-    }
-    @keyframes spin {      
-      to {      
-        transform: rotate(360deg);      
-      }      
-    }      
-  
-    @keyframes fadeIn {      
-      from {      
-        opacity: 0;      
-        transform: translateY(10px);      
-      }      
-      to {      
-        opacity: 1;      
-        transform: translateY(0);      
-      }      
-    }      
-  
-    @media (max-width: 460px) {      
-      .auth-wrapper {      
-        margin: 2rem 1rem;      
-        padding: 1.5rem;      
-        margin-top:120px !important;      
-      }      
-    .auth-switch {      
-      text-align: center;      
-      margin-top: 1rem;      
-      font-size: 0.67rem;      
-    }      
-      .auth-header {      
-        font-size: 1rem;      
-      }      
-    .auth-terms {      
-      display: flex;      
-      align-items: flex-start;      
-      gap: 0.5rem;      
-      font-size: 0.57rem;      
-      color: #4b5563;      
-      margin-top: 0.5rem;      
-    }      
-      .auth-button,      
-      .auth-input {      
-        font-size: 0.7rem;      
-      }      
-    }      
-  `}</style>  
       <Navbar />
       <div className="auth-wrapper">
         {loading ? (
-              <div className="loading-container">
-                <div className="loader"></div>
-                <p style={{ marginTop: "1rem", fontSize: "1rem", color: "#555" }}>
-                  Loading, please wait...
-                </p>
-              </div>
+          <div className="loading-section">
+            <div className="spinner"></div>
+            <p>Loading, please wait...</p>
+          </div>
         ) : (
           <>
             {(view === 'signin' || view === 'signup') && (
@@ -366,27 +221,19 @@ margin-top:15%;
                   <label className="auth-terms">
                     <input type="checkbox" defaultChecked />
                     <span>
-                      By continuing, I agree to the&nbsp;
-                      <Link to="/terms" id="g">terms of use</Link>&nbsp;and&nbsp;
-                      <Link to="/policy" id="g">privacy policy</Link>.
+                      By continuing, I agree to the <Link to="/terms" id="g">terms of use</Link> and <Link to="/policy" id="g">privacy policy</Link>.
                     </span>
                   </label>
                 </form>
-                <h4 id="k">OR</h4>
 
+                <h4 id="k">OR</h4>
                 <div style={{ marginTop: '1rem' }} id="googleSignInDiv"></div>
 
                 <p className="auth-switch">
                   {view === 'signin' ? (
-                    <>
-                      Don’t have an account?{' '}
-                      <span className="auth-link" onClick={() => setView('signup')}>Sign Up</span>
-                    </>
+                    <>Don’t have an account? <span className="auth-link" onClick={() => setView('signup')}>Sign Up</span></>
                   ) : (
-                    <>
-                      Already have an account?{' '}
-                      <span className="auth-link" onClick={() => setView('signin')}>Login</span>
-                    </>
+                    <>Already have an account? <span className="auth-link" onClick={() => setView('signin')}>Login</span></>
                   )}
                 </p>
               </>
