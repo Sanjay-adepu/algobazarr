@@ -109,24 +109,31 @@ alert('Address submitted successfully!');
 setView('account');
 };
 
+
 const handleSignOut = () => {
-localStorage.removeItem('googleId');
-localStorage.removeItem('email');
-setAccountDetails(null);
-setFormData({
-name: '',
-mobile: '',
-email: '',
-password: '',
-address: '',
-locality: '',
-landmark: '',
-pincode: '',
-city: '',
-state: '',
-});
-setView('signin');
+  localStorage.removeItem('googleId');
+  localStorage.removeItem('email');
+
+  window.google?.accounts?.id?.disableAutoSelect(); // Clear stored Google session
+
+  setAccountDetails(null);
+  setFormData({
+    name: '',
+    mobile: '',
+    email: '',
+    password: '',
+    address: '',
+    locality: '',
+    landmark: '',
+    pincode: '',
+    city: '',
+    state: '',
+  });
+  setView('signin');
 };
+
+
+
 
 const renderGoogleButton = (viewType) => {
 const container = document.getElementById('googleSignInDiv');
@@ -150,47 +157,54 @@ setTimeout(() => {
 };
 
 useEffect(() => {
-const storedGoogleId = localStorage.getItem('googleId');
-const storedEmail = localStorage.getItem('email');
+  const storedGoogleId = localStorage.getItem('googleId');
+  const storedEmail = localStorage.getItem('email');
 
-if (storedGoogleId && storedEmail) {    
-  setFormData(prev => ({ ...prev, email: storedEmail }));    
-  setView('account');    
-} else {    
-  setView('signin');    
-}    
+  if (storedGoogleId && storedEmail) {
+    setFormData(prev => ({ ...prev, email: storedEmail }));
+    setView('account');
+  } else {
+    setView('signin');
+  }
 
-const script = document.createElement('script');    
-script.src = 'https://accounts.google.com/gsi/client';    
-script.async = true;    
-script.defer = true;    
-document.body.appendChild(script);    
+  // Load the Google Sign-In script
+  const script = document.createElement('script');
+  script.src = 'https://accounts.google.com/gsi/client';
+  script.async = true;
+  script.defer = true;
+  document.body.appendChild(script);
 
-script.onload = () => {
-  if (!window.google || !window.google.accounts) return;
+  script.onload = () => {
+    if (!window.google || !window.google.accounts) return;
 
-  // Cancel any leftover sessions or auto-prompt before initializing
-  window.google.accounts.id.cancel(); // 👈 Call this FIRST
+    // Cancel any One Tap UI or auto-prompts
+    window.google.accounts.id.cancel();
 
-  window.google.accounts.id.initialize({
-  client_id: '741240365062-r2te32gvukmekm4r55l4ishc0mhsk4f9.apps.googleusercontent.com',
-  callback: handleCredentialResponse,
-  ux_mode: 'popup',
-  auto_select: false,
-  auto_prompt: false,
-  context: 'use', // 👈 Enforce manual selection every time
-  prompt_parent_id: 'googleSignInDiv',
-});
+    // Disable account auto-selection from previous sessions
+    window.google.accounts.id.disableAutoSelect();
 
-  // Only render button (no automatic dropdown behavior)
-  renderGoogleButton(view);
-};
+    // Initialize Google Sign-In with strict popup only, no One Tap, no dropdown
+    window.google.accounts.id.initialize({
+      client_id: '741240365062-r2te32gvukmekm4r55l4ishc0mhsk4f9.apps.googleusercontent.com',
+      callback: handleCredentialResponse,
+      ux_mode: 'popup',
+      auto_select: false,
+      auto_prompt: false,
+      context: 'use', // Only proceed if user actively initiates
+      prompt_parent_id: 'googleSignInDiv',
+    });
 
-return () => {    
-  window.google?.accounts?.id?.cancel();    
-};
+    // Render the custom Google button
+    renderGoogleButton(view);
+  };
 
+  return () => {
+    // Clean up on unmount
+    window.google?.accounts?.id?.cancel?.();
+    window.google?.accounts?.id?.disableAutoSelect?.();
+  };
 }, []);
+
 
 useEffect(() => {
 if (window.google?.accounts?.id) {
