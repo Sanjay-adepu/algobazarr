@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AddressForm.css';
-import Navbar from '../Navbar/Navbar';
+
 
 const AddressForm = () => {
   const navigate = useNavigate();
@@ -76,7 +76,7 @@ const [isAddressCompleted, setIsAddressCompleted] = useState(false);
 
   return (
 <>
-<Navbar/>
+
     <form className="address-form" onSubmit={handleSubmit}>
       <h2 className="form-title">Add New Address</h2>
       <div className="form-grid">
