@@ -173,13 +173,14 @@ script.onload = () => {
   window.google.accounts.id.cancel(); // 👈 Call this FIRST
 
   window.google.accounts.id.initialize({
-    client_id: '741240365062-r2te32gvukmekm4r55l4ishc0mhsk4f9.apps.googleusercontent.com',
-    callback: handleCredentialResponse,
-    ux_mode: 'popup',
-    auto_select: false, // ✅ Do not auto-select previously signed-in accounts
-    auto_prompt: false, // ✅ Prevent One Tap prompt
-    prompt_parent_id: 'googleSignInDiv',
-  });
+  client_id: '741240365062-r2te32gvukmekm4r55l4ishc0mhsk4f9.apps.googleusercontent.com',
+  callback: handleCredentialResponse,
+  ux_mode: 'popup',
+  auto_select: false,
+  auto_prompt: false,
+  context: 'use', // 👈 Enforce manual selection every time
+  prompt_parent_id: 'googleSignInDiv',
+});
 
   // Only render button (no automatic dropdown behavior)
   renderGoogleButton(view);
