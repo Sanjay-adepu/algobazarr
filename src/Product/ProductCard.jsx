@@ -26,8 +26,11 @@ const ProductCard = () => {
   "Most Popular",
   "Buying Strategies",
   "Selling Strategies",
-  "Duplicate Strategies"
+  "Duplicate Strategies",
+  "Collaborated Strategies" // <-- Add this
 ];
+
+
 
 useEffect(() => {
   const checkAddress = async () => {
@@ -136,7 +139,12 @@ useEffect(() => {
     }
   };
 
-  const getSortedProducts = () => {
+ 
+
+
+
+
+const getSortedProducts = () => {
   switch (activeSort) {
     case "Buying Strategies":
       return products.filter((p) => p.sorttype === "buying" && !p.isPriced);
@@ -144,17 +152,25 @@ useEffect(() => {
       return products.filter((p) => p.sorttype === "selling" && !p.isPriced);
     case "Duplicate Strategies":
       return products.filter((p) => p.isPriced === true);
+    case "Collaborated Strategies": // <-- New sort option
+      return products.filter((p) => p.sorttype === "collaborate" && !p.isPriced);
     case "Newest":
       return products
         .filter((p) => !p.isPriced)
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // optional if you have createdAt
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     case "Most Popular":
-      return [...products].filter((p) => !p.isPriced).sort(() => Math.random() - 0.5); // or popularity logic
+      return [...products].filter((p) => !p.isPriced).sort(() => Math.random() - 0.5);
     case "All Strategies":
     default:
-      return products; // includes both priced and unpriced
+      return products;
   }
 };
+
+
+
+
+
+
 
 
   const filteredProducts = getSortedProducts();
