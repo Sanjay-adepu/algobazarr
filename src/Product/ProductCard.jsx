@@ -32,6 +32,19 @@ const ProductCard = () => {
 
 
 
+
+useEffect(() => {
+  const googleId = localStorage.getItem("googleId");
+  if (!googleId) {
+    alert("Please login or sign up to continue.");
+    navigate("/login");
+  }
+}, [navigate]);
+
+
+
+
+
 useEffect(() => {
   const checkAddress = async () => {
     const googleId = localStorage.getItem('googleId');
