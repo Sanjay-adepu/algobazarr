@@ -2,12 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://algobazarr.store/</loc><priority>1.0</priority></url>
   <url><loc>https://algobazarr.store/product</loc></url>
-  <url><loc>https://algobazarr.store/order</loc></url>
-  <url><loc>https://algobazarr.store/my-address</loc></url>
-  <url><loc>https://algobazarr.store/address</loc></url>
-  <url><loc>https://algobazarr.store/account</loc></url>
-  <url><loc>https://algobazarr.store/login</loc></url>
-  <url><loc>https://algobazarr.store/cart</loc></url>
   <url><loc>https://algobazarr.store/blog</loc></url>
   <url><loc>https://algobazarr.store/category</loc></url>
   <url><loc>https://algobazarr.store/contact</loc></url>
@@ -15,5 +9,4 @@
   <url><loc>https://algobazarr.store/policy</loc></url>
   <url><loc>https://algobazarr.store/faq</loc></url>
   <url><loc>https://algobazarr.store/about</loc></url>
-  <url><loc>https://algobazarr.store/search</loc></url>
 </urlset>
