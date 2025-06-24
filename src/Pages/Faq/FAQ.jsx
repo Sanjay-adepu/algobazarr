@@ -16,7 +16,7 @@ const faqs = [
   {
     question: "What is the profit-sharing model for subscribers using your strategies?",
     answer:
-      "Some strategies available on AlgoBazarr include profit-sharing arrangements. For details on which strategies offer this and how it works, please check the specific strategy descriptions or contact us directly.",
+      "Some strategies available on AlgoDukaan include profit-sharing arrangements. For details on which strategies offer this and how it works, please check the specific strategy descriptions or contact us directly.",
   },
   {
     question: "How often do you update or add new strategies to the website?",
@@ -34,7 +34,7 @@ const faqs = [
       "While our primary focus is on strategy development and customization, we also provide basic guidance and resources to help new users navigate the Tradetron platform effectively.",
   },
   {
-    question: "Is my personal information safe when I purchase from AlgoBazarr?",
+    question: "Is my personal information safe when I purchase from AlgoDukaan?",
     answer:
       "Definitely. We prioritize your privacy and data security by using secure payment gateways and maintaining strict confidentiality protocols to protect your personal information.",
   },
@@ -49,9 +49,9 @@ const faqs = [
       "We accept all major digital payment methods including credit and debit cards, net banking, and UPI. We recommend using UPI as it is the fastest and preferred mode of payment on our platform.",
   },
   {
-    question: "Can I add my own trading strategies to AlgoBazarr?",
+    question: "Can I add my own trading strategies to AlgoDukaan?",
     answer:
-      "Yes, you can! If you have profitable trading strategies you'd like to share or promote, AlgoBazarr offers a platform where you can submit your strategies. After review, we may feature them on our website to help you reach a wider audience. Please contact us for more details on the submission and collaboration process.",
+      "Yes, you can! If you have profitable trading strategies you'd like to share or promote, AlgoDukaan offers a platform where you can submit your strategies. After review, we may feature them on our website to help you reach a wider audience. Please contact us for more details on the submission and collaboration process.",
   },
 ];
 
