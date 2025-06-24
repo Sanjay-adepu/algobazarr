@@ -14,7 +14,7 @@ const PrivacyPolicy = () => {
 
         <section className="privacy-section">
           <p>
-            At AlgoBazarr, protecting your privacy is important to us. This policy explains what information we collect, how we use it, and your rights when using our website and services.
+            At AlgoDukaan, protecting your privacy is important to us. This policy explains what information we collect, how we use it, and your rights when using our website and services.
           </p>
         </section>
 
@@ -58,7 +58,10 @@ const PrivacyPolicy = () => {
 
         <section className="privacy-section">
           <h3>Contact Information</h3>
-          <p>For questions or concerns about your privacy, please reach out to us at: <a href="mailto:algobazarr@gmail.com">algobazarr@gmail.com</a></p>
+          <p>
+            For questions or concerns about your privacy, please reach out to us at:{" "}
+            <a href="mailto:algodukaan@gmail.com">algodukaan@gmail.com</a>
+          </p>
         </section>
       </div>
     </>
