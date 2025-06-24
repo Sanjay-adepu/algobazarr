@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './BlogCard.css';
 import Navbar from "../../Navbar/Navbar.jsx";
+
 const blogs = [
   {
     id: 1,
@@ -56,13 +57,12 @@ Platforms like Tradetron allow traders to backtest their strategies using histor
 The Future of Trading: Where Does Algo Fit In?
 As more traders recognize the limitations of manual trading, especially in dynamic market conditions, automated systems are becoming a necessity rather than a luxury. The rise in internet accessibility, growing awareness, and user-friendly platforms are accelerating the adoption of algo trading among Indian retail investors.
 
-While algorithmic trading requires a sound understanding of market dynamics, trading platforms, and sometimes coding, services like AlgoBazarr are making this transition easier. Traders can now subscribe to ready-made strategies, customize their own, or even collaborate with strategy developers.
+While algorithmic trading requires a sound understanding of market dynamics, trading platforms, and sometimes coding, services like AlgoDukaan are making this transition easier. Traders can now subscribe to ready-made strategies, customize their own, or even collaborate with strategy developers.
 
 Conclusion
 Algo trading is not just a trend—it’s a transformative shift in how modern traders operate. With its ability to remove human emotion, enhance execution speed, and improve consistency, algorithmic trading is offering traders a more disciplined and data-driven approach.
 
 For those tired of unpredictable manual trades and looking to scale efficiently, transitioning to algo trading could be a game-changer. That said, proper due diligence, platform familiarity, and understanding your risk profile remain essential before going live.
-    
     `,
   },
   {
@@ -92,7 +92,7 @@ Security and Risk Management: The new framework emphasizes the importance of sec
 
 Technological Advancements
 
-The proliferation of low-code and no-code platforms has significantly lowered the barriers to entry for retail traders interested in algorithmic trading. Platforms like Tradetron, AlgoBazarr, and SpeedBot offer intuitive interfaces that allow traders to create, backtest, and deploy trading strategies without extensive programming knowledge. This accessibility has empowered a broader segment of retail investors to engage in algorithmic trading.
+The proliferation of low-code and no-code platforms has significantly lowered the barriers to entry for retail traders interested in algorithmic trading. Platforms like Tradetron, AlgoDukaan, and SpeedBot offer intuitive interfaces that allow traders to create, backtest, and deploy trading strategies without extensive programming knowledge. This accessibility has empowered a broader segment of retail investors to engage in algorithmic trading.
 
 Market Dynamics
 
@@ -103,7 +103,6 @@ Conclusion
 The future of algorithmic trading in India appears promising for retail traders. With supportive regulatory frameworks, technological advancements, and a growing ecosystem of tools and platforms, retail investors are well-positioned to leverage algorithmic trading to enhance their trading strategies. However, it is essential for traders to understand the associated risks and ensure they are using compliant and secure systems to safeguard their investments.
 `,
   },
-  // Add more blog objects here
 ];
 
 const BlogList = () => {
@@ -119,28 +118,28 @@ const BlogList = () => {
     <>
       <Navbar/>
 
-    <div className="blog-container">
-      {expandedId === null ? (
-        blogs.map(blog => (
-          <div key={blog.id} className="blog-card" onClick={() => toggleExpand(blog.id)}>
-            <img src={blog.image} alt={blog.title} className="blog-img" />
-            <p className="blog-date">{blog.date}</p>
-            <h2 className="blog-title">{blog.title}</h2>
-            <p className="blog-summary">{blog.summary}</p>
-            <span className="read-more">Read now →</span>
+      <div className="blog-container">
+        {expandedId === null ? (
+          blogs.map(blog => (
+            <div key={blog.id} className="blog-card" onClick={() => toggleExpand(blog.id)}>
+              <img src={blog.image} alt={blog.title} className="blog-img" />
+              <p className="blog-date">{blog.date}</p>
+              <h2 className="blog-title">{blog.title}</h2>
+              <p className="blog-summary">{blog.summary}</p>
+              <span className="read-more">Read now →</span>
+            </div>
+          ))
+        ) : (
+          <div className="blog-full">
+            <p className="blog-date">{expandedBlog.date}</p>
+            <h1 className="blog-title">{expandedBlog.title}</h1>
+            <img src={expandedBlog.image} alt={expandedBlog.title} className="blog-img" />
+            <p className="blog-content">{expandedBlog.content}</p>
+            <span className="read-more" onClick={() => setExpandedId(null)}>Back to Blogs</span>
           </div>
-        ))
-      ) : (
-        <div className="blog-full">
-          <p className="blog-date">{expandedBlog.date}</p>
-          <h1 className="blog-title">{expandedBlog.title}</h1>
-          <img src={expandedBlog.image} alt={expandedBlog.title} className="blog-img" />
-          <p className="blog-content">{expandedBlog.content}</p>
-          <span className="read-more" onClick={() => setExpandedId(null)}>Back to Blogs</span>
-        </div>
-      )}
-    </div>
-        </>
+        )}
+      </div>
+    </>
   );
 };
 
