@@ -8,12 +8,12 @@ const TermsAndConditions = () => {
       <Navbar />
       <div className="terms-container">
         <h2 className="terms-title" style={{ fontFamily: "'Tinos', serif", fontWeight: 700 }}>
-          Terms & Conditions – AlgoBazarr
+          Terms & Conditions – AlgoDukaan
         </h2>
 
         <section className="terms-section">
           <p>
-            Welcome to AlgoBazarr. By accessing or using this website, you agree to the terms outlined below. If you do not agree with these terms, you should not continue to use the site or its services.
+            Welcome to AlgoDukaan. By accessing or using this website, you agree to the terms outlined below. If you do not agree with these terms, you should not continue to use the site or its services.
           </p>
         </section>
 
@@ -28,7 +28,7 @@ const TermsAndConditions = () => {
 
         <section className="terms-section">
           <h3>2. Intellectual Property Rights</h3>
-          <p>All content, strategy templates, visual elements, and branding on this website are the exclusive property of AlgoBazarr or its contributors.</p>
+          <p>All content, strategy templates, visual elements, and branding on this website are the exclusive property of AlgoDukaan or its contributors.</p>
           <ul>
             <li>You are not allowed to republish or resell any materials.</li>
             <li>Sharing private strategy links without permission is prohibited.</li>
@@ -39,7 +39,7 @@ const TermsAndConditions = () => {
         <section className="terms-section">
           <h3>3. Cookies and Data Usage</h3>
           <p>
-            AlgoBazarr uses cookies to improve your browsing experience and provide analytics. By continuing to use our services, you consent to our use of cookies. You may disable cookies in your browser, but this could affect site functionality.
+            AlgoDukaan uses cookies to improve your browsing experience and provide analytics. By continuing to use our services, you consent to our use of cookies. You may disable cookies in your browser, but this could affect site functionality.
           </p>
         </section>
 
@@ -78,13 +78,13 @@ const TermsAndConditions = () => {
           <p>
             All strategies are provided strictly for <strong>paper trading, testing, or educational use.</strong> If you wish to run any strategy live, you must first contact the admin for review and approval.
           </p>
-          <p>AlgoBazarr is not liable for any financial loss incurred by using these strategies in a live trading environment.</p>
+          <p>AlgoDukaan is not liable for any financial loss incurred by using these strategies in a live trading environment.</p>
         </section>
 
         <section className="terms-section">
           <h3>8. Disclaimer of Liability</h3>
           <ul>
-            <li>AlgoBazarr is a technical service provider, not an advisory firm or SEBI-registered entity.</li>
+            <li>AlgoDukaan is a technical service provider, not an advisory firm or SEBI-registered entity.</li>
             <li>We do not provide investment advice, tips, or calls.</li>
             <li>Users are solely responsible for any trading activity conducted using strategies purchased or created via this platform.</li>
             <li>Please consult your financial advisor before using any strategy with real capital.</li>
@@ -118,7 +118,7 @@ const TermsAndConditions = () => {
           <h3>11. Contact Us</h3>
           <p>
             For support, inquiries, or to verify before live deployment, contact us at:<br />
-            📧 <a href="mailto:algobazarr@gmail.com">algobazarr@gmail.com</a>
+            📧 <a href="mailto:algodukaan@gmail.com">algodukaan@gmail.com</a>
           </p>
         </section>
       </div>
