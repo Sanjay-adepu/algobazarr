@@ -49,8 +49,8 @@ const Navbar = () => {
       <nav className="navbar">
         <div className="navbar-logo">
           <img
-            src="https://res.cloudinary.com/dppiuypop/image/upload/v1749013255/uploads/nk1oegfjvhxsnwosmklh.jpg"
-            alt="AlgoBazaar Logo"
+            src="/file_00000000175c61f787ac51250e94c909.jpg"
+            alt="AlgoDukaan"
             style={{ height: '37px' }}
             id="d"
           />
