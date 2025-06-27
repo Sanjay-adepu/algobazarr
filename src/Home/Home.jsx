@@ -188,7 +188,7 @@ const ProductCards = () => {
         </div>
       )}
 
-     
+     <Footer/>
     </>
   );
 };
