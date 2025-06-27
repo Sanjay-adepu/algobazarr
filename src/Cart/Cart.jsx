@@ -3,6 +3,7 @@ import axios from 'axios';
 import Navbar from '../Navbar/Navbar';
 import { FaArrowLeft } from 'react-icons/fa';
 import { FiShoppingCart, FiCheckCircle } from 'react-icons/fi';
+import Footer from '../Footer/Footer.jsx';
 import './Cart.css';
 
 const adminWhatsAppNumber = '918142216171';
@@ -226,6 +227,7 @@ const Cart = () => {
           </div>
         </div>
       )}
+<Footer/>
     </>
   );
 };
