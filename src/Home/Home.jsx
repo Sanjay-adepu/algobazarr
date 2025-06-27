@@ -86,7 +86,7 @@ By submitting your strategy to AlgoDukaan, you agree to the above terms.`,
   {
     id: 2,
     title: 'AlgoDukaan Strategy Creation Service',
-    image: 'https://res.cloudinary.com/dppiuypop/image/upload/v1748254107/uploads/onpjlu15vkpsuzgjmz2n.jpg',
+    image: '/file_000000005a2c61f58ac0865d6df51cb3.png',
     formLink: 'https://forms.gle/ttLjs1D612XzLa6LA',
      description: `🛠️ Custom Tradetron Strategy Development — Available on AlgoDukaan
 
