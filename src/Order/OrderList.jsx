@@ -137,7 +137,7 @@ const OrderList = () => {
                 <div className="order-card" key={index} onClick={() => setSelectedOrder(order)}>
                   <div className="selected-order-card">
                     <div className="order-brand">
-                                                <img  src="https://res.cloudinary.com/dppiuypop/image/upload/v1749013255/uploads/nk1oegfjvhxsnwosmklh.jpg"
+                                                <img  src="/file_00000000175c61f787ac51250e94c909.jpg"
 />
                     </div>
                     <div className="order-details-bar">
@@ -165,8 +165,9 @@ const OrderList = () => {
 
             <div className="selected-order-card">
               <div className="order-brand">
-                <img src="https://res.cloudinary.com/dppiuypop/image/upload/v1749013255/uploads/nk1oegfjvhxsnwosmklh.jpg"
+                                                             <img  src="/file_00000000175c61f787ac51250e94c909.jpg"
 />
+      
               </div>
 
               <div className="order-details-bar">
