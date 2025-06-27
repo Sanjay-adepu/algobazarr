@@ -6,13 +6,13 @@ import Footer from '../Footer/Footer.jsx';
 const products = [
   {
     id: 1,
-    title: 'Collaborate Your Strategy with AlgoBazarr',
+    title: 'Collaborate Your Strategy with AlgoDukaan',
     image: 'https://res.cloudinary.com/dppiuypop/image/upload/v1748232368/uploads/pgghdd1o984m3fph3jkh.jpg',
     formLink: 'https://forms.gle/izKtv55kMwYS7mei6',
-    description: `🤝 Collaborate Your Strategy with AlgoBazarr
+    description: `🤝 Collaborate Your Strategy with AlgoDukaan
 
 Are you a strategy creator looking to reach more traders?
-Partner with AlgoBazarr to publish, promote, and grow your strategy’s visibility!
+Partner with AlgoDukaan to publish, promote, and grow your strategy’s visibility!
 
 We offer a seamless collaboration where you provide the strategy, and we take care of the rest — from publishing it on our platform to marketing it across the trading community.
 
@@ -21,7 +21,7 @@ We offer a seamless collaboration where you provide the strategy, and we take ca
 Share your ready-to-deploy Tradetron strategy with us — whether it’s manual, signal-based, or fully automated.
 
 2. We Publish It
-Your strategy will be featured on the AlgoBazarr website, professionally presented with complete details, screenshots, and performance metrics.
+Your strategy will be featured on the AlgoDukaan website, professionally presented with complete details, screenshots, and performance metrics.
 
 3. We Promote It
 We promote your strategy via social media, email campaigns, and featured placements on our site.
@@ -31,7 +31,7 @@ You focus on building great strategies — we handle visibility, traffic, and re
 
 📈 Please share a Backtest Report, Live Offline Report, or Live Report with your submission to help us evaluate and showcase the performance accurately.
 
-🎯 Why Partner with AlgoBazarr?
+🎯 Why Partner with AlgoDukaan?
 📢 Professional exposure to an active algo trading audience
 🔍 Transparent listing with verifiable results
 💼 No upfront cost – just a high-quality strategy
@@ -41,30 +41,30 @@ You focus on building great strategies — we handle visibility, traffic, and re
 🚀 Ready to Collaborate?
 Whether you’re a beginner or an expert — if you have a working Tradetron strategy and performance data to back it up, let’s publish and promote it together.
 
-📩 Submit your strategy today on AlgoBazarr and join a growing network of top algo creators.
+📩 Submit your strategy today on AlgoDukaan and join a growing network of top algo creators.
 
 
 🤝 Strategy Collaboration Agreement
 
-Between: AlgoBazarr (Platform)
+Between: AlgoDukaan (Platform)
 And: Strategy Creator (You)
 
 1. 📌 Purpose
-You agree to share your trading strategy with AlgoBazarr for the purpose of listing, publishing, and promoting it on the platform.
+You agree to share your trading strategy with AlgoDukaan for the purpose of listing, publishing, and promoting it on the platform.
 
 2. 🔐 Ownership & Rights
 You retain full ownership of your strategy and logic.
 
-By submitting the strategy, you grant AlgoBazarr non-exclusive rights to display, describe, and promote the strategy on its website and marketing channels.
+By submitting the strategy, you grant AlgoDukaan non-exclusive rights to display, describe, and promote the strategy on its website and marketing channels.
 
 You can request removal or changes at any time.
 
 3. 📊 Transparency & Safety
 You agree to provide Backtest, Live Offline, or Live Reports to verify performance.
 
-AlgoBazarr will never alter or resell your strategy without your written permission.
+AlgoDukaan will never alter or resell your strategy without your written permission.
 
-No sensitive credentials (like API keys or login info) should be shared with AlgoBazarr.
+No sensitive credentials (like API keys or login info) should be shared with AlgoDukaan.
 
 4. 💼 Responsibilities
 
@@ -72,25 +72,25 @@ You:
 - Must ensure the strategy complies with Tradetron’s and regulatory guidelines.
 - Are responsible for the accuracy of claims or metrics shown.
 
-AlgoBazarr:
+AlgoDukaan:
 - Will publish and promote your strategy professionally.
 - Will not be liable for any trading losses incurred by users who use your strategy.
 
 5. ❌ Disclaimer
 This agreement is not a financial partnership or advisory relationship.
-AlgoBazarr is a platform and does not guarantee any results or returns.
+AlgoDukaan is a platform and does not guarantee any results or returns.
 
 ✅ Agreement Confirmation
-By submitting your strategy to AlgoBazarr, you agree to the above terms.`,
+By submitting your strategy to AlgoDukaan, you agree to the above terms.`,
   },
   {
     id: 2,
-    title: 'AlgoBazarr Strategy Creation Service',
+    title: 'AlgoDukaan Strategy Creation Service',
     image: 'https://res.cloudinary.com/dppiuypop/image/upload/v1748254107/uploads/onpjlu15vkpsuzgjmz2n.jpg',
     formLink: 'https://forms.gle/ttLjs1D612XzLa6LA',
-     description: `🛠️ Custom Tradetron Strategy Development — Available on AlgoBazarr
+     description: `🛠️ Custom Tradetron Strategy Development — Available on AlgoDukaan
 
-Turn your trading ideas into fully functional algorithms with our Tradetron strategy development services, now available on AlgoBazarr. From simple logic to complex multi-layered automation, we build tailor-made strategies that meet your exact trading needs.
+Turn your trading ideas into fully functional algorithms with our Tradetron strategy development services, now available on AlgoDukaan. From simple logic to complex multi-layered automation, we build tailor-made strategies that meet your exact trading needs.
 
 🧠 What’s Included:
 We offer end-to-end support for:
@@ -118,11 +118,11 @@ You’ll receive a test version to observe performance. After your approval, the
 This is a technical development service, not a SEBI-registered advisory.  
 No trading or investment recommendations are provided.  
 You are strongly advised to consult a licensed financial advisor before using any strategy.  
-Please review the FAQ section on AlgoBazarr before placing your order.
+Please review the FAQ section on AlgoDukaan before placing your order.
 
-🚀 Get Started Now on AlgoBazarr  
+🚀 Get Started Now on AlgoDukaan  
 Have a strategy idea? Let us help you automate it with accuracy and speed.  
-🔗 Visit AlgoBazarr.com and submit your requirements today.`,
+🔗 Visit AlgoDukaan.com and submit your requirements today.`,
   },
 ];
 
@@ -169,23 +169,23 @@ const ProductCards = () => {
           ))}
         </div>
       ) : (
-<div className="product-detail">
-  <button className="back-button" onClick={handleBack}>Back</button>
-  <img
-    src={selectedProduct.image}
-    alt={selectedProduct.title}
-    className="detail-image"
-  />
-  <div className="detail-content">
-    <h3 className="detail-title">{selectedProduct.title}</h3>
-    <div
-      className="detail-description"
-      dangerouslySetInnerHTML={{
-        __html: selectedProduct.description.replace(/\n/g, '<br />'),
-      }}
-    />
-  </div>
-</div>
+        <div className="product-detail">
+          <button className="back-button" onClick={handleBack}>Back</button>
+          <img
+            src={selectedProduct.image}
+            alt={selectedProduct.title}
+            className="detail-image"
+          />
+          <div className="detail-content">
+            <h3 className="detail-title">{selectedProduct.title}</h3>
+            <div
+              className="detail-description"
+              dangerouslySetInnerHTML={{
+                __html: selectedProduct.description.replace(/\n/g, '<br />'),
+              }}
+            />
+          </div>
+        </div>
       )}
 
       <Footer />
