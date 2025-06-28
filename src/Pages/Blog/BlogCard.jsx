@@ -69,7 +69,7 @@ For those tired of unpredictable manual trades and looking to scale efficiently,
     id: 2,
     date: "",
     title: "Why Traders Are Switching from Manual Trading to Algo Trading?",
-    image: "/image-png.webp",
+    image: "/Gemini_Generated_Image_twd4dytwd4dytwd4.png",
     summary: "Compared to some more developed markets, retail trading employing algorithms is still a relatively new phenomenon in India. According to data, over 11 million new DMAT accounts were opened between April 2020 and January 2021.",
     content: `
     Introduction
