@@ -27,23 +27,27 @@ const Navbar = () => {
     { label: 'Privacy Policy', path: '/policy' },
   ];
 
+  const handleNavClick = (e, path) => {
+    if (location.pathname === path) {
+      e.preventDefault();
+      window.location.reload();
+    }
+  };
+
   return (
     <>
       {/* ✅ Show custom banner only on homepage */}
-      
-     <div className="custom-banner">
-      
-          Contact us to get your custom Algo Strategy Created on Tradetron
-          <a
-            href="https://wa.me/message/BDTCA7QUSKFLO1"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="whatsapp-button"
-          >
-            WhatsApp
-          </a> 
-        </div>
-    
+      <div className="custom-banner">
+        Contact us to get your custom Algo Strategy Created on Tradetron
+        <a
+          href="https://wa.me/message/BDTCA7QUSKFLO1"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="whatsapp-button"
+        >
+          WhatsApp
+        </a>
+      </div>
 
       {/* ✅ Navbar */}
       <nav className="navbar">
@@ -61,9 +65,8 @@ const Navbar = () => {
             <li key={path}>
               <Link
                 to={path}
-                className={`nav-link ${
-                  location.pathname === path ? 'active-link' : ''
-                }`}
+                className={`nav-link ${location.pathname === path ? 'active-link' : ''}`}
+                onClick={(e) => handleNavClick(e, path)}
               >
                 {label}
               </Link>
@@ -72,41 +75,44 @@ const Navbar = () => {
         </ul>
 
         <div className="navbar-icons">
-          <Link to="/" className="icon desktop-only">
-            <FiHome
-              style={{ color: location.pathname === '/' ? '#000' : '#888' }}
-            />
+          <Link to="/" className="icon desktop-only" onClick={(e) => handleNavClick(e, '/')}>
+            <FiHome style={{ color: location.pathname === '/' ? '#000' : '#888' }} />
           </Link>
-          <Link to="/search" className="icon desktop-only">
-            <FiSearch
-              style={{
-                color: location.pathname === '/search' ? '#000' : '#888',
-              }}
-            />
+          <Link
+            to="/search"
+            className="icon desktop-only"
+            onClick={(e) => handleNavClick(e, '/search')}
+          >
+            <FiSearch style={{ color: location.pathname === '/search' ? '#000' : '#888' }} />
           </Link>
-          <Link to="/category" className="icon desktop-only">
-            <FiGrid
-              style={{
-                color: location.pathname === '/category' ? '#000' : '#888',
-              }}
-            />
+          <Link
+            to="/category"
+            className="icon desktop-only"
+            onClick={(e) => handleNavClick(e, '/category')}
+          >
+            <FiGrid style={{ color: location.pathname === '/category' ? '#000' : '#888' }} />
           </Link>
-          <Link to="/cart" className="icon desktop-only">
-            <FiShoppingCart
-              style={{
-                color: location.pathname === '/cart' ? '#000' : '#888',
-              }}
-            />
+          <Link
+            to="/cart"
+            className="icon desktop-only"
+            onClick={(e) => handleNavClick(e, '/cart')}
+          >
+            <FiShoppingCart style={{ color: location.pathname === '/cart' ? '#000' : '#888' }} />
           </Link>
-          <Link to="/login" className="icon desktop-only">
-            <FiUser
-              style={{
-                color: location.pathname === '/login' ? '#000' : '#888',
-              }}
-            />
+          <Link
+            to="/login"
+            className="icon desktop-only"
+            onClick={(e) => handleNavClick(e, '/login')}
+          >
+            <FiUser style={{ color: location.pathname === '/login' ? '#000' : '#888' }} />
           </Link>
 
-          <Link to="/search" className="icon mobile-only" id="h">
+          <Link
+            to="/search"
+            className="icon mobile-only"
+            id="h"
+            onClick={(e) => handleNavClick(e, '/search')}
+          >
             <FiSearch />
           </Link>
           <button
@@ -127,7 +133,14 @@ const Navbar = () => {
               to={path}
               key={path}
               className={`sidebar-link full-click ${location.pathname === path ? 'active' : ''}`}
-              onClick={() => setSidebarOpen(false)}
+              onClick={(e) => {
+                if (location.pathname === path) {
+                  e.preventDefault();
+                  window.location.reload();
+                } else {
+                  setSidebarOpen(false);
+                }
+              }}
             >
               <li>{label}</li>
             </Link>
@@ -139,36 +152,32 @@ const Navbar = () => {
       <div className="bottom-nav mobile-only">
         <Link
           to="/"
-          className={`bottom-nav-item ${
-            location.pathname === '/' ? 'active' : ''
-          }`}
+          className={`bottom-nav-item ${location.pathname === '/' ? 'active' : ''}`}
+          onClick={(e) => handleNavClick(e, '/')}
         >
           <FiHome className="icon" />
           <span>Home</span>
         </Link>
         <Link
           to="/category"
-          className={`bottom-nav-item ${
-            location.pathname === '/category' ? 'active' : ''
-          }`}
+          className={`bottom-nav-item ${location.pathname === '/category' ? 'active' : ''}`}
+          onClick={(e) => handleNavClick(e, '/category')}
         >
           <FiGrid className="icon" />
           <span>Categories</span>
         </Link>
         <Link
           to="/cart"
-          className={`bottom-nav-item ${
-            location.pathname === '/cart' ? 'active' : ''
-          }`}
+          className={`bottom-nav-item ${location.pathname === '/cart' ? 'active' : ''}`}
+          onClick={(e) => handleNavClick(e, '/cart')}
         >
           <FiShoppingCart className="icon" />
           <span>Cart</span>
         </Link>
         <Link
           to="/login"
-          className={`bottom-nav-item ${
-            location.pathname === '/login' ? 'active' : ''
-          }`}
+          className={`bottom-nav-item ${location.pathname === '/login' ? 'active' : ''}`}
+          onClick={(e) => handleNavClick(e, '/login')}
         >
           <FiUser className="icon" />
           <span>Account</span>
