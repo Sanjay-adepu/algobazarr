@@ -7,7 +7,7 @@ const blogs = [
     id: 1,
     date: "",
     title: "Why a lot of Traders are getting into Option Selling?",
-    image: "/image.webp",
+    image: "/Gemini_Generated_Image_txttq6txttq6txtt.png",
     summary: "While most people focus on buying stocks, there's another way to make money: selling options. In fact, there are inherent advantages to being an option seller that can lead to consistent profits. In this blog post, we will discuss some of the key advantages of being an option seller and how you can use them to your advantage..",
     content: `
     Introduction
