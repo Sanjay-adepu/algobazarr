@@ -28,8 +28,8 @@ const AboutUs = () => {
 
           <div className="review-images">
             {/* Replace with real images later */}
-            <img src="./file_0000000097f861fdafa53801ef03516d.png" alt="Customer Review 1" />
-            <img src="./file_00000000ad3c61f8b64fdac3990191d7.png" alt="Customer Review 2" />
+            <img src="https://res.cloudinary.com/dppiuypop/image/upload/v1751211135/uploads/n5dbczirt2dr1drbigsn.png" alt="Customer Review 1" />
+            <img src="https://res.cloudinary.com/dppiuypop/image/upload/v1751211208/uploads/zie4m6wcizovar3euntb.png" alt="Customer Review 2" />
           </div>
         </div>
       </section>
